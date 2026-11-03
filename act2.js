@@ -516,7 +516,7 @@ scene({id:'majestic',when:'2026-08-29T17:00',name:'29 August · majestic',   bar
 
 /* 15 · To be continued — the two chairs at dusk */
 act('V','September','and the two chairs','2099-12-31');
-scene({id:'end',     when:'2099-01-01T00:00',name:'To be continued',        bars:6, fin:['#000000',1.6],fout:null,
+scene({id:'end',     when:'2099-01-01T00:00',name:'To be continued',        bars:7, fin:['#000000',1.8],fout:null,
   prep(){const S=snowset();return{S,hill:makeLayer({w:1600,seed:23,y0:360,amp:50,oct:3,f0:0.004,top:'#d9cfe0',bottom:'#8f84a8',patches:['#efe4ef','#7a6f96'],pines:{n:150,size:40,sink:4,dark:'#1a2430',light:'#263344',snow:'#e8dff0'},rim:'#ffd9b0',rimA:0.6,rimW:3})};},
   draw(ctx,lt,A){
     paintSky(ctx,[[0,'#2b2a5e'],[0.4,'#8d5a86'],[0.7,'#f0a06a'],[0.85,'#ffd9a0']]);
@@ -531,11 +531,12 @@ scene({id:'end',     when:'2099-01-01T00:00',name:'To be continued',        bars
     ctx.save();ctx.translate(905,660);ctx.rotate(0.1);ctx.fillStyle='#fffdf5';rrect(ctx,-24,-16,48,32,4);ctx.fill();ctx.fillStyle='#b8402f';ctx.font='700 20px "Mulish",sans-serif';ctx.textAlign='center';ctx.fillText('48',0,7);ctx.restore();
     ctx.save();ctx.translate(430,668);ctx.rotate(-0.12);ctx.fillStyle='#fffdf5';rrect(ctx,-24,-16,48,32,4);ctx.fill();ctx.fillStyle='#b8402f';ctx.font='700 20px "Mulish",sans-serif';ctx.textAlign='center';ctx.fillText('5',0,7);ctx.restore();
     snowfall(ctx,lt,90,132,6,2,0.75);
-    const a=smooth(5,7.5,lt);
+    /* the card arrives slowly, after the line has been read, and holds to the end */
+    const a=smooth(7.6,10.6,lt);
     if(a>0){ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba(20,14,40,.42)';rrect(ctx,170,150,940,190,24);ctx.fill();ctx.textAlign='center';ctx.fillStyle='#fff6e8';ctx.shadowColor='rgba(20,10,40,.7)';ctx.shadowBlur=18;
       ctx.font='600 64px "Cormorant Garamond",serif';ctx.fillText('to be continued…',640,232);
-      ctx.font='500 14px "Mulish",sans-serif';setLS(ctx,'5px');ctx.globalAlpha=a*smooth(8,10,lt);ctx.fillText('ANTA AL HAYAT · YOU ARE LIFE',640,274);setLS(ctx,'0px');
-      ctx.globalAlpha=a*smooth(10.5,12.5,lt);ctx.fillStyle='#ffe9cf';ctx.font='500 15px "Mulish",sans-serif';ctx.fillText('part two is still being made',640,312);
+      ctx.font='500 14px "Mulish",sans-serif';setLS(ctx,'5px');ctx.globalAlpha=a*smooth(11.0,13.2,lt);ctx.fillText('ANTA AL HAYAT · YOU ARE LIFE',640,274);setLS(ctx,'0px');
+      ctx.globalAlpha=a*smooth(13.6,15.8,lt);ctx.fillStyle='#ffe9cf';ctx.font='500 15px "Mulish",sans-serif';ctx.fillText('part two is still being made',640,312);
       ctx.restore();}
   }
 });
@@ -601,7 +602,7 @@ sub('majestic',11.6,13.0,'Awwww','her');
 sub('majestic',13.6,16.6,'Mujhe tum aziz ho. Sabse zyada.','him');
 sub('majestic',17.0,20.6,'Broooo, if we get married I’ll ask Ammi to make this the first time you visit 🤤','her');
 sub('majestic',21.0,23.0,'Wifey. InshaAllah.','him');
-sub('end',1.0,5.0,'We’re still up there, on two chairs, looking at the mountains, waiting for number 48.');
+sub('end',1.0,7.2,'We’re still up there, on two chairs, looking at the mountains, waiting for number 48.');
 
 /* ---------- programme notes for the shot list (new scenes carry note/tag in their definition) ---------- */
 noteFor('title','title over the ski slope and the lift.','Jan 2026');

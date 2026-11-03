@@ -156,44 +156,45 @@ scene({id:'whathappened',name:'What happened that day',when:'2026-09-06T23:45',b
 /* ================================================================================================
    Honesty — four cards
    ================================================================================================ */
+/* each card holds about a second for every three words (none under three seconds) */
 const S3_HONESTY=[
-  {at:0.8,until:8.0,text:'Fabeha, I am not invalidating your feelings, and I am not gaslighting you. I am only coming to you with honesty.'},
-  {at:8.5,until:14.9,text:'I know I am wrong in places. Things you may not have noticed, but I have. And I am working on them.'},
-  {at:15.4,until:22.2,text:'I should have been patient. But when you said you are fine, that was the minute I knew something had gone wrong.'},
-  {at:22.7,until:32.1,text:'The only khayal I had was your nani, since you had told me I have to take care of you in situations like these. I thought apki nani ki tabiyat aur zyada kharab ho gayi hai.'},
-  {at:32.6,until:44.4,text:'My second thought was that someone was harassing you. And that Rizwan ka beta would be dealt with, since at that time you were with me, and hence my izzat. I am trying to get hold of him; he has harassed other girls as well.'},
-  {at:45.0,until:52.2,text:'All of this was running in my head. And I was being there for you every three or four days, to reassure you: I am here for you.'},
-  {at:53.8,until:60.6,text:'I am not putting any pressure on you about us getting back together. I firmly believe it has to be your decision.'},
-  {at:61.1,until:69.9,text:'But chhod ke nahi jaana tha. Hum dono ko saath mein mil ke sab solve karna tha. I became vulnerable because aap ne hi bola tha: that is what partners are for.'},
-  {at:70.4,until:80.6,text:'My love for you was paak. I always wanted to marry you, and with the best conditions. I had discussed it with my parents, and I had planned to introduce you to them on 5 December.'},
+  {at:0.8, until:7.8, text:'Fabeha, I am not invalidating your feelings, and I am not gaslighting you. I am only coming to you with honesty.'},
+  {at:8.3, until:16.1,text:'I know I am wrong in places. Things you may not have noticed, but I have. And I am working on them.'},
+  {at:16.6,until:24.4,text:'I should have been patient. But when you said you are fine, that was the minute I knew something had gone wrong.'},
+  {at:24.9,until:37.3,text:'The only khayal I had was your nani, since you had told me I have to take care of you in situations like these. I thought apki nani ki tabiyat aur zyada kharab ho gayi hai.'},
+  {at:37.8,until:53.6,text:'My second thought was that someone was harassing you. And that Rizwan ka beta would be dealt with, since at that time you were with me, and hence my izzat. I am trying to get hold of him; he has harassed other girls as well.'},
+  {at:54.1,until:63.9,text:'All of this was running in my head. And I was being there for you every three or four days, to reassure you: I am here for you.'},
+  {at:65.6,until:73.0,text:'I am not putting any pressure on you about us getting back together. I firmly believe it has to be your decision.'},
+  {at:73.5,until:84.6,text:'But chhod ke nahi jaana tha. Hum dono ko saath mein mil ke sab solve karna tha. I became vulnerable because aap ne hi bola tha: that is what partners are for.'},
+  {at:85.1,until:97.5,text:'My love for you was paak. I always wanted to marry you, and with the best conditions. I had discussed it with my parents, and I had planned to introduce you to them on 5 December.'},
 ];
-scene({id:'honesty',name:'Honesty',when:'2026-09-06T23:46',bars:25,fin:['#000000',1.2],fout:['#000000',1.2],
+const S3_HON_NEW=64.0;                       /* the fresh screen before “no pressure”: the ground dissolves over 1.4 s */
+scene({id:'honesty',name:'Honesty',when:'2026-09-06T23:46',bars:30,fin:['#000000',1.4],fout:['#000000',1.4],
   note:'text cards on a dark warm ground with a little light in it, one at a time, each held long enough to read: not invalidating, not gaslighting, only honesty; wrong in places and working on them; what went through his head the minute she said she was fine — her nani, someone harassing her — and being there every three or four days; then a fresh screen — no pressure, it has to be her decision; chhod ke nahi jaana tha; and the plan he had made for 5 December.',
   tag:'“I am only coming to you with honesty.”',
   prep(){return{g1:s3_ground(41),g2:s3_ground(42)};},
   draw(ctx,lt,A){
-    const second=smooth(52.4,53.4,lt);
+    const second=smooth(S3_HON_NEW-0.2,S3_HON_NEW+1.2,lt);
     ctx.drawImage(A.g1,0,0);
     if(second>0){ctx.save();ctx.globalAlpha=second;ctx.drawImage(A.g2,0,0);ctx.restore();}
-    const lx=640+180*Math.sin(lt*0.11),ly=230+40*Math.cos(lt*0.09);
-    ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,lx,ly,520,'#ffb27a',0.07);ctx.restore();
+    /* the light drifts, very slowly, so the frame is never still */
+    const lx=640+200*Math.sin(lt*0.09),ly=240+50*Math.cos(lt*0.07);
+    ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,lx,ly,540,'#ffb27a',0.08);glow(ctx,640-240*Math.sin(lt*0.05),560,420,'#c87a5a',0.04);ctx.restore();
     motes(ctx,lt,18,411,'#ffd0a0',1.0,0.35);
-    /* the dip between the second and third cards: a new screen */
-    const dip=smooth(52.3,52.8,lt)*(1-smooth(52.9,53.6,lt));
-    if(dip>0){ctx.fillStyle=`rgba(3,3,7,${(0.92*dip).toFixed(3)})`;ctx.fillRect(0,0,W,H);}
-    for(const c of S3_HONESTY){const a=smooth(c.at-0.2,c.at+0.6,lt)*(1-smooth(c.until-0.5,c.until+0.1,lt));s3_big(ctx,c.text,a,{y:300,size:c.text.length>150?46:50,maxW:980});}
+    /* the fresh screen: a soft dim while the ground changes, not a cut */
+    const dip=smooth(S3_HON_NEW-0.3,S3_HON_NEW+0.4,lt)*(1-smooth(S3_HON_NEW+0.6,S3_HON_NEW+1.5,lt));
+    if(dip>0){ctx.fillStyle=`rgba(3,3,7,${(0.7*dip).toFixed(3)})`;ctx.fillRect(0,0,W,H);}
+    /* the cards: centred high enough that the longest never meets the subtitle band, the lines spaced wide */
+    for(const c of S3_HONESTY){const a=smooth(c.at-0.2,c.at+0.7,lt)*(1-smooth(c.until-0.5,c.until+0.2,lt)),n=c.text.length;
+      s3_big(ctx,c.text,a,{y:n>150?286:300,size:n>200?44:n>150?46:50,lhm:1.3,maxW:980});}
   },
   subs:S3_HONESTY.map(c=>[c.at,c.until,c.text]),
-  score({add,T,pad}){
-    const line=(bar,seq,vel)=>{let beat=0;for(const[m,d]of seq){if(m)add(T(bar,beat),'piano',{midi:m,dur:d*BEAT*1.6,vel});beat+=d;}};
-    const ch=['Cmaj7','G','Am7','Em','Cmaj7','G','Dsus','Em','Am7','Fmaj7','Cmaj7','G','Em','Cmaj7','Am7','Dsus','Em','Cmaj7','G','Dsus','Am7','Fmaj7','Cmaj7','G','G'];
-    for(let b=0;b<25;b++)pad(T(b),ch[b],1.05,b>=9&&b<16?0.17:0.2,b>=20?'strings':'pad');
-    line(0,[[67,2],[64,1],[62,1]],0.26);line(1,[[59,4]],0.24);line(2,[[64,2],[67,1],[69,1]],0.26);line(3,[[67,4]],0.24);
-    line(4,[[72,2],[71,1],[69,1]],0.26);line(5,[[67,3],[0,1]],0.24);
-    line(7,[[64,2],[67,1],[71,1]],0.24);line(8,[[69,3],[67,1]],0.22);line(9,[[65,2],[64,1],[62,1]],0.2);line(10,[[64,4]],0.2);
-    line(12,[[0,2],[59,2]],0.18);line(13,[[64,3],[0,1]],0.18);line(14,[[62,2],[0,1],[59,1]],0.18);line(15,[[55,4]],0.16);
-    line(16,[[64,2],[67,1],[71,1]],0.24);line(17,[[69,3],[67,1]],0.22);line(18,[[64,2],[62,1],[64,1]],0.22);line(19,[[59,4]],0.2);
-    line(20,[[67,2],[64,1],[62,1]],0.22);line(21,[[64,4]],0.2);line(22,[[72,2],[71,1],[69,1]],0.22);line(23,[[67,4]],0.2);line(24,[[0,2],[59,2]],0.18);
+  score({add,T,at,pad}){
+    /* soft pads, strings joining for the last three cards; one piano note as each card arrives, and a few passing ones */
+    const ch=['Cmaj7','G','Am7','Em','Cmaj7','G','Dsus','Em','Am7','Fmaj7','Cmaj7','G','Em','Cmaj7','Am7','Dsus','Em','Cmaj7','G','Dsus','Am7','Fmaj7','Cmaj7','G','Em','Cmaj7','Am7','Dsus','G','G'];
+    for(let b=0;b<30;b++)pad(T(b),ch[b],1.05,b<19?0.22:0.2,b>=19?'strings':'pad');
+    [64,62,59,60,57,59,64,62,67].forEach((m,k)=>add(at(S3_HONESTY[k].at+0.2),'piano',{midi:m,dur:3.2,vel:0.22}));
+    [[4.2,67],[12.0,64],[20.4,62],[30.0,64],[45.6,59],[59.0,62],[69.0,67],[79.0,64],[91.6,71],[95.0,67]].forEach(([t,m])=>add(at(t),'piano',{midi:m,dur:2.6,vel:0.18}));
   },
   amb(){return{room:0.2};},
 });
@@ -202,15 +203,15 @@ scene({id:'honesty',name:'Honesty',when:'2026-09-06T23:46',bars:25,fin:['#000000
    What should I let go? — the questions, stacking up; the gifts he never got to give
    ================================================================================================ */
 const S3_Q=[
-  {at:5.4,text:'The hugs we never did?'},
-  {at:8.9,text:'The trips we never went on?'},
-  {at:12.4,text:'The outings we never went on?'},
-  {at:15.9,text:'The flowers I never got to give you, or the flowers you never received?'},
-  {at:20.6,text:'The gifts I never got to give you?'},
-  {at:42.8,text:'The business we never did?'},
-  {at:46.3,text:'The engagement we never did?'},
-  {at:49.8,text:'Or should we forget meeting your mom?'},
-  {at:53.8,text:'What should we forget?'},
+  {at:5.4, text:'The hugs we never did?',chime:88},
+  {at:8.9, text:'The trips we never went on?',chime:91},
+  {at:12.4,text:'The outings we never went on?',chime:93},
+  {at:15.9,text:'The flowers I never got to give you, or the flowers you never received?',chime:95},
+  {at:20.6,text:'The gifts I never got to give you?',chime:98},
+  {at:44.8,text:'The business we never did?',chime:91},
+  {at:48.3,text:'The engagement we never did?',chime:95},
+  {at:51.8,text:'Or should we forget meeting your mom?',chime:98},
+  {at:55.8,text:'What should we forget?',chime:100},
 ];
 const S3_Q_BIG=52,S3_Q_LH=62,S3_Q_SMALL=0.6,S3_Q_SLH=42;
 /* the settled layout when item k is the current one: the current big at y=340, the earlier ones stacked above it, smaller and softer */
@@ -242,31 +243,32 @@ function s3_questions(ctx,items,lt,vis){
   }
   ctx.restore();
 }
-const S3_GIFTS=[['bangles.jpg',24.2,27.7],['flowers.jpg',27.7,31.2],['sweets.jpg',31.2,34.7]];
-scene({id:'letgo',name:'What should I let go?',when:'2026-09-06T23:47',bars:18,fin:['#000000',1.2],fout:['#000000',1.6],
+const S3_GIFTS=[['bangles.jpg',24.4,28.4],['flowers.jpg',28.4,32.4],['sweets.jpg',32.4,36.4]];
+const S3_LG={photoIn:23.8,photoOut:44.0,art:[36.6,44.0]};  /* the gifts section: 23.8–44.8, the art from 36.6 */
+scene({id:'letgo',name:'What should I let go?',when:'2026-09-06T23:47',bars:19,fin:['#000000',1.4],fout:['#000000',1.6],
   note:'on a dark ground: “what should I let go?” — then the questions, one at a time, large in the middle of the frame, the earlier ones climbing up behind in a softer colour. At “the gifts I never got to give you” the gifts themselves: the bangles in their packets, the bouquet of sunflowers and roses, the box of sweets, then the piece of art with their two names hidden in its lines. Back to the questions; the last one held: “What should we forget?”',
   tag:'“What should we forget?”',
   prep(){return{g:s3_ground(44),vig:s3_vignette(),gifts:S3_GIFTS.map(g=>s3_img(g[0])),art:s3_img('art.jpg')};},
   draw(ctx,lt,A){
     ctx.drawImage(A.g,0,0);
     const lx=640-220*Math.sin(lt*0.08),ly=260+50*Math.cos(lt*0.07);
-    ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,lx,ly,560,'#ffb27a',0.06);ctx.restore();
+    ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,lx,ly,560,'#ffb27a',0.07);glow(ctx,640+200*Math.sin(lt*0.05),580,400,'#c87a5a',0.04);ctx.restore();
     motes(ctx,lt,18,443,'#ffd0a0',1.0,0.35);
     /* the opening line */
-    s3_big(ctx,'And when you said let it go, tell me: what should I let go?',smooth(0.6,1.3,lt)*(1-smooth(4.8,5.4,lt)),{y:340,size:56,maxW:1000});
+    s3_big(ctx,'And when you said let it go, tell me: what should I let go?',smooth(0.6,1.4,lt)*(1-smooth(4.8,5.4,lt)),{y:340,size:56,maxW:1000});
     /* the questions */
-    const photos=smooth(23.6,24.4,lt)*(1-smooth(42.3,43.0,lt));
+    const photos=smooth(S3_LG.photoIn,S3_LG.photoIn+0.8,lt)*(1-smooth(S3_LG.photoOut,S3_LG.photoOut+0.8,lt));
     s3_questions(ctx,S3_Q,lt,1-photos);
-    /* the gifts */
+    /* the gifts: each fades in over 0.6 s with a slow push-in, dissolving into the next */
     if(photos>0){
       ctx.fillStyle=`rgba(3,3,7,${(0.55*photos).toFixed(3)})`;ctx.fillRect(0,0,W,H);
-      S3_GIFTS.forEach((g,k)=>{const[,t0,t1]=g,a=smooth(t0-0.25,t0+0.45,lt)*(1-smooth(t1-0.45,t1+0.1,lt));if(a<=0)return;
+      S3_GIFTS.forEach((g,k)=>{const[,t0,t1]=g,a=smooth(t0-0.2,t0+0.5,lt)*(1-smooth(t1-0.5,t1+0.1,lt));if(a<=0)return;
         s3_photo(ctx,A.gifts[k],a*photos,1+0.05*smooth(t0,t1,lt),{h:640,cy:H/2});});
       /* the art, larger and longer, the paper itself; his line beside it */
-      const aa=smooth(34.9,35.7,lt)*(1-smooth(41.8,42.5,lt));
+      const[a0,a1]=S3_LG.art,aa=smooth(a0,a0+0.7,lt)*(1-smooth(a1-0.5,a1+0.2,lt));
       if(aa>0){
-        s3_photo(ctx,A.art,aa*photos,1+0.05*smooth(35.2,42.2,lt),{h:540,cx:410,cy:300,crop:[80,220,560,880]});
-        s3_big(ctx,'This one has our names hidden in it. In plain English.',aa*photos*smooth(36.0,36.8,lt),{x:930,y:300,size:46,maxW:440,glow:false});
+        s3_photo(ctx,A.art,aa*photos,1+0.05*smooth(a0,a1,lt),{h:540,cx:410,cy:300,crop:[80,220,560,880]});
+        s3_big(ctx,'This one has our names hidden in it. In plain English.',aa*photos*smooth(a0+1.2,a0+2.0,lt),{x:930,y:300,size:46,maxW:440,glow:false});
       }
     }
   },
@@ -276,21 +278,22 @@ scene({id:'letgo',name:'What should I let go?',when:'2026-09-06T23:47',bars:18,f
     [9.1,12.1,'The trips we never went on?'],
     [12.6,15.6,'The outings we never went on?'],
     [16.1,20.3,'The flowers I never got to give you, or the flowers you never received?'],
-    [20.8,23.6,'The gifts I never got to give you?'],
-    [36.4,41.2,'This one has our names hidden in it. In plain English.'],
-    [43.0,46.0,'The business we never did?'],
-    [46.5,49.5,'The engagement we never did?'],
-    [50.0,53.4,'Or should we forget meeting your mom?'],
-    [54.0,58.6,'What should we forget?'],
+    [20.8,23.8,'The gifts I never got to give you?'],
+    [38.0,42.8,'This one has our names hidden in it. In plain English.'],
+    [45.0,48.0,'The business we never did?'],
+    [48.5,51.5,'The engagement we never did?'],
+    [52.0,55.4,'Or should we forget meeting your mom?'],
+    [56.0,60.6,'What should we forget?'],
   ],
-  score({add,T,pad}){
+  score({add,T,at,hit,pad}){
+    /* a string pad that rises slowly through the scene, a chime on each question; a little piano under the opening line and the gifts */
     const line=(bar,seq,vel)=>{let beat=0;for(const[m,d]of seq){if(m)add(T(bar,beat),'piano',{midi:m,dur:d*BEAT*1.6,vel});beat+=d;}};
-    const ch=['Em','Cmaj7','G','Dsus','Em7','Am7','Cadd9','Dsus','Em','Cmaj7','Am7','G','Em','Cmaj7','G','Dsus','Em','Em'];
-    for(let b=0;b<18;b++)pad(T(b),ch[b],1.05,b>=7&&b<13?0.17:0.21,b>=10&&b<13?'strings':'pad');
-    line(0,[[64,2],[67,1],[71,1]],0.28);line(1,[[69,3],[67,1]],0.26);line(2,[[64,2],[62,1],[64,1]],0.26);line(3,[[59,4]],0.24);
-    line(4,[[64,2],[67,1],[71,1]],0.26);line(5,[[72,2],[71,1],[69,1]],0.26);line(6,[[67,4]],0.24);
+    const ch=['Em','Cmaj7','G','Dsus','Em7','Am7','Cadd9','Dsus','Em','Cmaj7','Am7','G','Em','Cmaj7','G','Dsus','Em','Cmaj7','Em'];
+    for(let b=0;b<19;b++)pad(T(b),ch[b],1.05,0.2+0.2*Math.min(1,b/17),'strings');
+    for(const q of S3_Q)hit(q.at+0.3,'chime',{midi:q.chime,vel:0.32});
+    line(0,[[64,2],[67,1],[71,1]],0.26);line(1,[[69,3],[67,1]],0.24);
     line(7,[[0,2],[64,2]],0.2);line(8,[[67,3],[0,1]],0.2);line(9,[[71,2],[69,1],[67,1]],0.2);line(10,[[64,4]],0.2);line(11,[[0,2],[62,2]],0.18);line(12,[[64,4]],0.18);
-    line(13,[[64,2],[67,1],[71,1]],0.26);line(14,[[69,3],[67,1]],0.24);line(15,[[64,2],[62,1],[64,1]],0.24);line(16,[[59,4]],0.22);line(17,[[52,4]],0.2);
+    line(17,[[64,2],[62,1],[64,1]],0.22);line(18,[[59,4]],0.2);
   },
   amb(){return{room:0.2};},
 });
@@ -298,27 +301,32 @@ scene({id:'letgo',name:'What should I let go?',when:'2026-09-06T23:47',bars:18,f
 /* ================================================================================================
    Please don't be — her again, the room a little brighter
    ================================================================================================ */
-scene({id:'nothurt',name:'Please don’t be',when:'2026-09-06T23:48',bars:8,fin:['#000000',1.2],fout:['#000000',2.6],
-  note:'the room again, a little brighter, the light on her softer; Fabeha in the middle of the frame, listening, and the smallest smile arriving while he says it; held on her until the fade, her theme on the piano.',
+scene({id:'nothurt',name:'Please don’t be',when:'2026-09-06T23:48',bars:10,fin:['#000000',1.4],fout:['#000000',1.8],
+  note:'the room again, a little brighter, the light on her softer; Fabeha in the middle of the frame, listening, and the smallest smile arriving while he says it; held on her until the fade, her theme stated in full on the piano, strings under it.',
   tag:'“I can carry myself well.”',
   prep(){return{room:s3_room(),vig:s3_vignette()};},
   draw(ctx,lt,A){
+    /* the same room and pool of light, a little brighter; the slowest push-in towards her over the whole scene */
+    const z=1+0.035*smooth(0,33,lt);
+    ctx.save();ctx.translate(640,390);ctx.scale(z,z);ctx.translate(-640,-390);
     ctx.drawImage(A.room,0,0);
+    s3_doorLight(ctx,lt,0.5);
     ctx.fillStyle='rgba(255,214,170,.07)';ctx.fillRect(0,0,W,H);
     glow(ctx,640,380,760,'#ffc090',0.12);
-    const warm=smooth(2,16,lt),smileUp=smooth(12,18,lt);
+    const warm=smooth(2,18,lt),smileUp=smooth(13,22,lt);
     s3_her(ctx,lt,A,{light:1.25,look:0.04*Math.sin(lt*0.45),smile:lerp(0.26,0.5,smileUp),brow:lerp(0.06,0,warm),tilt:0.04*Math.sin(lt*0.3)+0.03,blush:lerp(0.3,0.42,smileUp),seed:911});
+    ctx.restore();
   },
   subs:[
-    [1.0,6.2,'I know you are hurt. But please, don’t be. I have got myself. I can carry myself well.'],
-    [7.4,11.8,'The only concern I have is for you: that you don’t get hurt.'],
+    [1.0,7.2,'I know you are hurt. But please, don’t be. I have got myself. I can carry myself well.'],
+    [7.8,12.4,'The only concern I have is for you: that you don’t get hurt.'],
   ],
   score({add,T,pad,melody,THEME_B,THEME_B_CH}){
+    /* a bar to settle, then her theme whole: eight bars on the piano, pads becoming strings; a last Em to close */
     const line=(bar,seq,vel)=>{let beat=0;for(const[m,d]of seq){if(m)add(T(bar,beat),'piano',{midi:m,dur:d*BEAT*1.6,vel});beat+=d;}};
-    pad(T(0),'Em',1.05,0.2,'pad');pad(T(1),'Cmaj7',1.05,0.2,'pad');
-    line(0,[[64,2],[67,1],[71,1]],0.26);line(1,[[69,3],[67,1]],0.24);
-    const tb=[0,1,2,3,6,7];
-    for(let i=0;i<6;i++){const b=2+i;pad(T(b),THEME_B_CH[tb[i]],1.05,0.2,i>=3?'strings':'pad');melody(b,tb[i],'piano',0,0.34,THEME_B);}
+    pad(T(0),'Em',1.05,0.2,'pad');line(0,[[64,2],[67,1],[71,1]],0.26);
+    for(let i=0;i<8;i++){const b=1+i;pad(T(b),THEME_B_CH[i],1.05,i>=4?0.24:0.2,i>=2?'strings':'pad');melody(b,i,'piano',0,0.34,THEME_B);}
+    pad(T(9),'Em',1.4,0.22,'strings');add(T(9),'piano',{midi:52,dur:4,vel:0.26});add(T(9),'piano',{midi:64,dur:4,vel:0.22});add(T(9,2),'piano',{midi:71,dur:3,vel:0.18});
   },
   amb(){return{room:0.22};},
 });
