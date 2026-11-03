@@ -354,7 +354,7 @@ scene({id:'12baaje',name:'30 June · 12 baaje',when:'2026-06-30T02:49',bars:14,f
       bokeh(ctx,lt,30,1230,['#ffd27a','#ffb3c7','#fff2d0'],10,34,0.45);
       const im=A.ph;
       if(im&&im.complete&&im.naturalWidth){
-        const z=(780/(im.naturalWidth/3))*(1+0.05*smooth(40.5,46.7,lt)),w=im.naturalWidth*z,h=im.naturalHeight*z,x=W/2-w/2,y=H/2-h/2;
+        const z=(W/im.naturalWidth)*(1+0.03*smooth(40.5,46.7,lt)),w=im.naturalWidth*z,h=im.naturalHeight*z,x=W/2-w/2,y=H/2-h/2;
         ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=40;ctx.fillStyle='#000';ctx.fillRect(x,y,w,h);ctx.shadowBlur=0;
         ctx.drawImage(im,x,y,w,h);
       }

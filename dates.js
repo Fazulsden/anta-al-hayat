@@ -178,29 +178,36 @@ const DT_K29=[[0,{look:0.03,smile:0.56,tilt:0.0,blush:0.4}],[3.6,{look:0.8,smile
 /* ====================================================================================================
    7 February · 18:30 — after the sunflowers: Pepsi Café, a creamy pizza, and then the car, for hours
    ==================================================================================================== */
-scene({id:'car7feb',name:'7 February · the car',when:'2026-02-07T18:30',bars:9,fin:['#000000',1.2],fout:['#000000',1.4],
+scene({id:'car7feb',name:'7 February · the car',when:'2026-02-07T18:30',bars:13,fin:['#000000',1.2],fout:['#000000',1.4],
   note:'after the sunflowers, Pepsi Café: a creamy pizza in its open box across a small table, the sign’s red and blue in the window behind her; then the car outside at the end of the afternoon, turned to the passenger seat, the sage shirt, her hair tied low, for hours.',
   tag:'7 Feb · “her liking is my liking”',
-  prep(){return{cafe:dt_cafe(),table:dt_cafeTable(),cab:dt_cab(),vig:dt_vig(),
+  prep(){const ph=['photos/car7feb-1.jpg','photos/car7feb-2.jpg'].map(f=>{const im=new Image();im.src=f;return im;});return{ph,cafe:dt_cafe(),table:dt_cafeTable(),cab:dt_cab(),vig:dt_vig(),
     out:dt_outside({seed:702,sky:[[0,'#4b3f6e'],[0.45,'#c47a5e'],[0.75,'#f0c48c'],[1,'#f6dcb0']],far:'#5a4458',street:'#3a2f3c',winLit:'rgba(255,220,160,.55)',sign:true,trees:3,tree:'#3c4a3a',ground:['#5a5560','#3e3a44'],kerb:'#8a8590',lamps:[420,1010],blur:6})};},
   draw(ctx,lt,A){
     if(lt<9)dt_cafeDraw(ctx,lt,A);
     else dt_car(ctx,lt,A,{t:lt-9,D:21,keys:DT_K7,outfit:'sage',hair:'low',legCol:'#2b2b2e',len:190,tint:'rgba(255,170,110,.09)',rim:'#ffc890',rimA:0.16,spill:0.07,dash:0.13,amber:0.05,glass:0.07,bokeh:{n:14,seed:703,cols:['#ffd27a','#ff6a6a','#6a9bff'],a:0.35}});
     const dip=smooth(8.5,9,lt)*(1-smooth(9,9.6,lt));if(dip>0){ctx.fillStyle=`rgba(0,0,0,${dip.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
+    /* the two photographs he took in the car that evening, one after the other, sharp and full height */
+    const PH=[[25.0,31.6],[32.0,41.4]];
+    PH.forEach(([t0,t1],k)=>{const im=A.ph[k];if(!im||!im.complete||!im.naturalWidth)return;const a=smooth(t0,t0+0.7,lt)*(1-smooth(t1-0.6,t1,lt));if(a<=0)return;
+      const z=1+0.04*smooth(t0,t1,lt),h=(H-40)*z,w=h*im.naturalWidth/im.naturalHeight,x=W/2-w/2,y=H/2-h/2;
+      ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba(10,7,12,.9)';ctx.fillRect(0,0,W,H);ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=36;ctx.fillStyle='#000';ctx.fillRect(x,y,w,h);ctx.shadowBlur=0;ctx.drawImage(im,x,y,w,h);
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='500 13px "Mulish",sans-serif';ctx.textAlign='left';setLS(ctx,'2px');ctx.fillText('7 FEBRUARY · IN THE CAR',40,H-40);setLS(ctx,'0px');ctx.restore();});
   },
   subs:[
     [0.8,8.2,'After the sunflowers, Pepsi Café. We ordered a creamy pizza. I didn’t like it. But her liking is my liking.'],
     [11.0,15.2,'And then the car, for hours.'],
     [17.4,22.6,'She looked majestic. Her eyes, celestial.'],
+    [25.4,28.6,'In the car, I took these.'],
   ],
   score({hit,bars,melody,THEME_B,THEME_B_CH}){
     bars(0,3,['G','Cmaj7','Em7'],{padVel:0.34,arp:true,arpVel:0.12});
     hit(9.0,'swell',{dur:1.6,vel:0.22});
-    bars(3,6,THEME_B_CH,{padVel:0.4,strings:true});
+    bars(3,10,THEME_B_CH.concat(['Em','Cmaj7','G','Dsus']),{padVel:0.4,strings:true});
     for(let b=3;b<9;b++)melody(b,b-3,'piano',0,0.36,THEME_B);
-    hit(23.4,'chime',{midi:88,vel:0.22});
+    hit(23.4,'chime',{midi:88,vel:0.22});hit(25.2,'chime',{midi:91,vel:0.22});hit(32.2,'chime',{midi:95,vel:0.2});
   },
-  amb(lt){return lt<9?{room:0.2,crowd:0.12}:{hum:0.2};},
+  amb(lt){return lt<9?{room:0.2,crowd:0.12}:lt<25?{hum:0.2}:{room:0.12};},
 });
 
 /* ====================================================================================================
