@@ -161,15 +161,16 @@ const S3_HONESTY=[
   {at:0.8, until:7.8, text:'Fabeha, I am not invalidating your feelings, and I am not gaslighting you. I am only coming to you with honesty.'},
   {at:8.3, until:16.1,text:'I know I am wrong in places. Things you may not have noticed, but I have. And I am working on them.'},
   {at:16.6,until:24.4,text:'I should have been patient. But when you said you are fine, that was the minute I knew something had gone wrong.'},
-  {at:24.9,until:37.3,text:'The only khayal I had was your nani, since you had told me I have to take care of you in situations like these. I thought apki nani ki tabiyat aur zyada kharab ho gayi hai.'},
-  {at:37.8,until:53.6,text:'My second thought was that someone was harassing you. And that Rizwan ka beta would be dealt with, since at that time you were with me, and hence my izzat. I am trying to get hold of him; he has harassed other girls as well.'},
-  {at:54.1,until:63.9,text:'All of this was running in my head. And I was being there for you every three or four days, to reassure you: I am here for you.'},
-  {at:65.6,until:73.0,text:'I am not putting any pressure on you about us getting back together. I firmly believe it has to be your decision.'},
-  {at:73.5,until:84.6,text:'But chhod ke nahi jaana tha. Hum dono ko saath mein mil ke sab solve karna tha. I became vulnerable because aap ne hi bola tha: that is what partners are for.'},
-  {at:85.1,until:97.5,text:'My love for you was paak. I always wanted to marry you, and with the best conditions. I had discussed it with my parents, and I had planned to introduce you to them on 5 December.'},
+  {at:24.9,until:37.3,text:'The only khayal I had was your nani. Mein kaise akela chhod sakta tha? How could I have let you suffer, or get hurt? I thought apki nani ki tabiyat aur zyada kharab ho gayi hai.'},
+  {at:37.8,until:45.6,text:'You walking on eggshells literally made me feel like someone took out my heart and squeezed it.'},
+  {at:46.1,until:61.9,text:'My second thought was that someone was harassing you. And that Rizwan ka beta would be dealt with, since at that time you were with me, and hence my izzat. I am trying to get hold of him; he has harassed other girls as well.'},
+  {at:62.4,until:72.2,text:'All of this was running in my head. And I was being there for you every three or four days, to reassure you: I am here for you.'},
+  {at:73.9,until:81.3,text:'I am not putting any pressure on you about us getting back together. I firmly believe it has to be your decision.'},
+  {at:81.8,until:92.9,text:'But chhod ke nahi jaana tha. Hum dono ko saath mein mil ke sab solve karna tha. I became vulnerable because aap ne hi bola tha: that is what partners are for.'},
+  {at:93.4,until:105.8,text:'My love for you was paak. I always wanted to marry you, and with the best conditions. I had discussed it with my parents, and I had planned to introduce you to them on 5 December.'},
 ];
-const S3_HON_NEW=64.0;                       /* the fresh screen before “no pressure”: the ground dissolves over 1.4 s */
-scene({id:'honesty',name:'Honesty',when:'2026-09-06T23:46',bars:30,fin:['#000000',1.4],fout:['#000000',1.4],
+const S3_HON_NEW=72.3;                       /* the fresh screen before “no pressure”: the ground dissolves over 1.4 s */
+scene({id:'honesty',name:'Honesty',when:'2026-09-06T23:46',bars:33,fin:['#000000',1.4],fout:['#000000',1.4],
   note:'text cards on a dark warm ground with a little light in it, one at a time, each held long enough to read: not invalidating, not gaslighting, only honesty; wrong in places and working on them; what went through his head the minute she said she was fine — her nani, someone harassing her — and being there every three or four days; then a fresh screen — no pressure, it has to be her decision; chhod ke nahi jaana tha; and the plan he had made for 5 December.',
   tag:'“I am only coming to you with honesty.”',
   prep(){return{g1:s3_ground(41),g2:s3_ground(42)};},
@@ -192,7 +193,7 @@ scene({id:'honesty',name:'Honesty',when:'2026-09-06T23:46',bars:30,fin:['#000000
   score({add,T,at,pad}){
     /* soft pads, strings joining for the last three cards; one piano note as each card arrives, and a few passing ones */
     const ch=['Cmaj7','G','Am7','Em','Cmaj7','G','Dsus','Em','Am7','Fmaj7','Cmaj7','G','Em','Cmaj7','Am7','Dsus','Em','Cmaj7','G','Dsus','Am7','Fmaj7','Cmaj7','G','Em','Cmaj7','Am7','Dsus','G','G'];
-    for(let b=0;b<30;b++)pad(T(b),ch[b],1.05,b<19?0.22:0.2,b>=19?'strings':'pad');
+    for(let b=0;b<33;b++)pad(T(b),ch[b],1.05,b<19?0.22:0.2,b>=19?'strings':'pad');
     [64,62,59,60,57,59,64,62,67].forEach((m,k)=>add(at(S3_HONESTY[k].at+0.2),'piano',{midi:m,dur:3.2,vel:0.22}));
     [[4.2,67],[12.0,64],[20.4,62],[30.0,64],[45.6,59],[59.0,62],[69.0,67],[79.0,64],[91.6,71],[95.0,67]].forEach(([t,m])=>add(at(t),'piano',{midi:m,dur:2.6,vel:0.18}));
   },

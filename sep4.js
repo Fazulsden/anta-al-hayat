@@ -104,11 +104,11 @@ scene({id:'worthy',name:'Worthy of love',when:'2026-09-06T23:49',bars:18,fin:['#
    ================================================================================================ */
 const S4_ILTIJA=[
   {at:1.6, until:7.8, size:50,text:'I was fixing myself. Being careful, in the full midst of it, to not hurt you.'},
-  {at:8.3, until:16.9,size:46,text:'I would not want any relationship with you, since I cannot hurt you. If I did, I would have left in the first place.'},
+  {at:8.3, until:16.9,size:46,text:'No one can make you hurt. Not even me. If I did, then I had told you: I would leave.'},
   {at:17.4,until:26.8,size:46,text:'But my love, if you were in front of me that day, nothing would have caused you hurt. Nothing would have happened in the first place.'},
-  {at:27.3,until:34.9,size:48,text:'My love for you was paak. And I would only want one thing: us getting married, and me arranging everything.'},
+  {at:27.3,until:34.9,size:48,text:'My love for you is PAAK. And I would only want one thing: us getting married, and us figuring out everything, together.'},
   {at:35.4,until:43.4,size:56,text:'Eik hi iltija hai: don’t cry, and don’t hurt yourself. Be happy that we shared itna kuch.'},
-  {at:43.9,until:54.5,size:44,text:'And InshaAllah, if you agree to marriage, with the help of ALLAH SWT I will make it happen. Unke saamne tou kya cheez impossible hai? Kuch bhi nahi.'},
+  {at:43.9,until:54.5,size:44,text:'And InshaAllah, if you agree to marriage, with the help of ALLAH SWT we will make it happen, like partners. Unke saamne tou kya cheez impossible hai? Kuch bhi nahi.'},
   {at:55.0,until:63.6,size:52,text:'Aur meri har dua aapki khair, aur aapse shaadi ke liye hoti hai.'},
 ];
 const S4_IT={dimIn:1.0,dimOut:63.8,chime:35.9};   /* the veil; the chime on “iltija” */
