@@ -1,0 +1,193 @@
+<title>Anta Al Hayat</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;500;600;700&family=Noto+Nastaliq+Urdu&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap">
+<style>
+/* Layout: a screening room. The frame is the whole point; controls on a quiet strip; the programme notes read like a shot list. */
+:root{
+  --night:#0f1626;
+  --panel:#182238;
+  --snow:#f2eee6;
+  --soft:#cfcbc2;
+  --mute:#99a1b3;
+  --chai:#e0a458;
+  --ice:#9fd3f2;
+  --rose:#f0a6b8;
+  --on-accent:#1d150a;
+  --line:rgba(242,238,230,.14);
+  --shade:rgba(0,0,0,.6);
+  --display:"Cormorant Garamond","Georgia",serif;
+  --body:"Mulish","Segoe UI",system-ui,sans-serif;
+  --urdu:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif;
+  color-scheme:dark;
+}
+html{background:var(--night)}
+[hidden]{display:none!important}
+body{background:var(--night);color:var(--snow);font-family:var(--body);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:1120px;margin-inline:auto;padding-block:clamp(20px,4vw,44px) 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:clamp(18px,2.6vw,28px)}
+.masthead{display:grid;gap:6px}
+.eyebrow{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+h1{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(32px,5.4vw,60px);line-height:1.05;text-wrap:balance;display:flex;flex-wrap:wrap;align-items:baseline;gap:.1em .5em}
+h1 .ur{font-family:var(--urdu);font-weight:400;font-size:.5em;color:var(--chai);line-height:1.6}
+
+.theater{display:grid;gap:12px;min-width:0}
+.player{position:relative;background:#000;border-radius:6px;overflow:hidden;box-shadow:0 30px 80px -30px var(--shade),0 0 0 1px var(--line)}
+.frame{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;container-type:inline-size;margin-inline:auto;outline:none}
+.frame:focus-visible{outline:2px solid var(--chai);outline-offset:-3px}
+.frame canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer}
+.subs{position:absolute;left:50%;bottom:6.5%;transform:translateX(-50%);width:max-content;max-width:86%;box-sizing:border-box;margin:0;padding:.3em .9em;border-radius:.7em;background:rgba(8,10,18,.6);text-align:center;font-family:var(--body);font-weight:500;font-size:clamp(12px,2.2cqw,28px);line-height:1.45;color:#fff8ec;text-shadow:0 1px 2px rgba(0,0,0,.9);opacity:0;transition:opacity .4s ease;pointer-events:none;text-wrap:balance}
+.subs.on{opacity:1}
+.subs.k-n{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(13px,2.5cqw,32px)}
+.subs.k-him{color:#ffe3a8}
+.subs.k-her{color:#ffc7d6}
+.subs.k-him::before{content:"Fazul — ";opacity:.6;font-size:.8em}
+.subs.k-her::before{content:"Fabeha — ";opacity:.6;font-size:.8em}
+.player.nosubs .subs{display:none}
+.bigplay{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.65em;border:0;border-radius:999px;padding:.8em 1.5em .8em 1.15em;background:var(--chai);color:var(--on-accent);font:700 clamp(13px,1.9cqw,19px)/1 var(--body);letter-spacing:.02em;cursor:pointer;box-shadow:0 12px 30px -8px var(--shade);transition:transform .2s ease}
+.bigplay:hover{transform:translateX(-50%) scale(1.04)}
+.bigplay:focus-visible{outline:2px solid var(--snow);outline-offset:3px}
+.bigplay .tri{width:0;height:0;border-left:.8em solid currentColor;border-top:.5em solid transparent;border-bottom:.5em solid transparent}
+.player:fullscreen{display:flex;align-items:center;justify-content:center;border-radius:0;background:#000}
+.player:fullscreen .frame{width:min(100vw,177.78vh)}
+.player:-webkit-full-screen{display:flex;align-items:center;justify-content:center;border-radius:0;background:#000}
+.player:-webkit-full-screen .frame{width:min(100vw,177.78vh)}
+
+.controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px}
+.ctl{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--snow);height:38px;min-width:38px;padding:0 11px;border-radius:19px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font:500 13px/1 var(--body);cursor:pointer}
+.ctl:hover{border-color:rgba(224,164,88,.6)}
+.ctl:focus-visible,.chap:focus-visible{outline:2px solid var(--chai);outline-offset:2px}
+.ctl svg{width:16px;height:16px;fill:currentColor}
+.ctl[aria-pressed="false"]{color:var(--mute)}
+.time{font-variant-numeric:tabular-nums;color:var(--mute);font-size:13px;min-width:84px}
+#scrub{flex:1 1 220px;min-width:0;accent-color:var(--chai);height:24px;cursor:pointer}
+@media (max-width:560px){#scrub{order:10;flex-basis:100%}}
+
+.chapters{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.chap{width:100%;height:100%;text-align:left;border:1px solid var(--line);background:transparent;color:var(--snow);border-radius:8px;padding:10px 12px;display:grid;align-content:start;gap:3px;cursor:pointer;font:inherit}
+.chap:hover{border-color:rgba(224,164,88,.45)}
+.chap .n{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-variant-numeric:tabular-nums}
+.chap .t{font-family:var(--display);font-size:16px;font-weight:600;line-height:1.25}
+.chap[aria-current="true"]{border-color:var(--chai);background:rgba(224,164,88,.09)}
+.chap[aria-current="true"] .n{color:var(--chai)}
+.chapters .acthead{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;padding:14px 2px 2px;border-bottom:1px solid var(--line);margin-bottom:2px}
+.acthead .act-n{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--chai)}
+.acthead .act-t{font-family:var(--display);font-size:19px;font-weight:600}
+.acthead .act-w{font-size:12px;color:var(--mute)}
+@media (max-width:720px){.chapters{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:150px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.chapters li{scroll-snap-align:start}.chapters .acthead{grid-column:auto;flex-direction:column;gap:2px;padding:10px 8px;border:0;border-left:2px solid var(--chai);align-items:start}}
+
+.notes{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(18px,3vw,44px);padding-top:clamp(16px,2.4vw,26px);border-top:1px solid var(--line)}
+.notes > div{min-width:0}
+.notes h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 8px}
+.notes p{margin:0 0 10px;color:var(--soft);max-width:60ch}
+.shots{margin:0;padding:0;list-style:none;display:grid;gap:9px;counter-reset:shot}
+.shots li{display:grid;grid-template-columns:2.2em 1fr;gap:8px;color:var(--soft);font-size:14px;line-height:1.5}
+.shots li::before{counter-increment:shot;content:counter(shot);font-family:var(--display);font-weight:600;font-size:18px;color:var(--chai);font-variant-numeric:tabular-nums}
+.shots b{color:var(--snow);font-weight:600}
+.shots i{color:var(--ice);font-style:normal;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.facts{color:var(--mute)!important;font-size:13px}
+.vn.infilm .vn-meta em{font-style:normal;color:var(--chai);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.status{display:inline-block;padding:3px 10px;border-radius:999px;border:1px solid rgba(224,164,88,.5);color:var(--chai);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.voices{padding-top:clamp(16px,2.4vw,26px);border-top:1px solid var(--line);display:grid;gap:10px}
+.voices h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0}
+.voices p{margin:0 0 6px;color:var(--soft);max-width:70ch}
+.voices h3{font-family:var(--display);font-weight:600;font-size:17px;color:var(--chai);margin:14px 0 2px}
+.vn{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:center;gap:12px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.vn-meta{font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums}
+.vn-meta b{color:var(--snow);font-weight:600}
+.vn audio{width:100%;max-width:520px;height:36px;color-scheme:dark}
+.notes a,.voices a{color:var(--ice)}
+@media (max-width:520px){.vn{grid-template-columns:1fr}}
+@media (max-width:820px){.notes{grid-template-columns:1fr}}
+</style>
+
+<main class="page">
+  <header class="masthead">
+    <p class="eyebrow">A first-person film · <span id="runtime">7 min 33 s</span> · sound on · production cut 4</p>
+    <h1><span>Anta Al Hayat</span> <span class="ur" lang="ar">أنتَ الحياة</span></h1>
+  </header>
+
+  <section class="theater" aria-label="Film player">
+    <div class="player" id="player">
+      <div class="frame" id="frame" tabindex="0">
+        <canvas id="film" role="img" aria-label="Anta Al Hayat, an animated film"></canvas>
+        <p class="subs" id="subs"></p>
+        <button class="bigplay" id="bigplay" type="button"><span class="tri" aria-hidden="true"></span><span id="bigplayLabel">Play the film</span></button>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="playBtn" class="ctl" type="button" aria-label="Play">
+        <svg id="icoPlay" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg>
+        <svg id="icoPause" viewBox="0 0 16 16" aria-hidden="true" hidden><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"/></svg>
+      </button>
+      <button id="restartBtn" class="ctl" type="button" aria-label="Restart from the beginning">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5h2v11h-2zM14 2.5v11L6 8z"/></svg>
+      </button>
+      <span class="time"><span id="cur">0:00</span> / <span id="dur">7:33</span></span>
+      <input id="scrub" type="range" min="0" max="454" step="0.05" value="0" aria-label="Seek through the film">
+      <button id="subsBtn" class="ctl" type="button" aria-pressed="true">Subtitles</button>
+      <button id="soundBtn" class="ctl" type="button" aria-pressed="true" aria-label="Sound on">
+        <svg id="icoSound" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3.5v11L5 10H2z M11 5.2a4 4 0 0 1 0 5.6l-.9-.9a2.7 2.7 0 0 0 0-3.8z M12.8 3.4a6.5 6.5 0 0 1 0 9.2l-.9-.9a5.2 5.2 0 0 0 0-7.4z"/></svg>
+        <svg id="icoMute" viewBox="0 0 16 16" aria-hidden="true" hidden><path d="M2 6h3l4-3.5v11L5 10H2z M10.6 5.6l1 -1 1.7 1.7 1.7-1.7 1 1-1.7 1.7 1.7 1.7-1 1-1.7-1.7-1.7 1.7-1-1 1.7-1.7z"/></svg>
+      </button>
+      <button id="fsBtn" class="ctl" type="button" aria-label="Full screen">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2h4.5v1.6H3.6v2.9H2zM9.5 2H14v4.5h-1.6V3.6H9.5zM2 9.5h1.6v2.9h2.9V14H2zM12.4 9.5H14V14H9.5v-1.6h2.9z"/></svg>
+      </button>
+      <button id="exportBtn" class="ctl" type="button" title="Records the film at 1920×1080 with sound and saves a .webm">Export video (1080p)</button>
+    </div>
+    <p class="facts" id="exportMsg" aria-live="polite"></p>
+    <ol class="chapters" id="chapters" aria-label="Scenes"></ol>
+  </section>
+
+  <section class="notes">
+    <div>
+      <span class="status">Unfinished · cut 4</span>
+      <p class="facts" id="facts"></p>
+      <h2>What this is</h2>
+      <p>A film told from Fazul's eyes, December 2025 to September 2026. The camera is him; Fabeha is drawn from her photographs: the long hair with the centre part, the sweater and sunglasses from Malam Jabba, the tan coat and beanie from the snow, the IBA sweater and backpack.</p>
+      <p>Every line in quotation marks is from the chat, with the spelling kept. The narration between them is written in his voice from what he said at the time. Chat scenes show the real messages with their real timestamps. Some of her real voice notes play inside the film; all of them are kept below. The birthday page is re-created from <a href="birthday/index.html">the real one</a>, letter and game and all.</p>
+      <p>Each frame is painted live in the browser and the score is synthesised as it plays. Click the picture to pause, pick a scene to jump to it. Space plays and pauses; the arrow keys skip five seconds, J and L ten; the comma and full stop keys step between scenes; F is full screen. The film remembers where you stopped, so it can be watched in sittings.</p>
+      <h2>Where it stands</h2>
+      <p>Production cut 4. Every stretch of the story now has scenes, drafted from the chat with its real lines and times, and they are waiting for Fazul's notes: keep, cut, or change, scene by scene. Still to come: the moments only he can tell (what was said in person, the calls), the second half of the hour, the rest of her voice notes, and a proper ending.</p>
+    </div>
+    <div>
+      <h2>Shot list</h2>
+      <ol class="shots" id="shots"></ol>
+    </div>
+  </section>
+
+  <section class="voices" aria-label="Her voice notes">
+    <h2>Her voice notes</h2>
+    <p>All 44, in order, with the time each was sent; the ones that play inside the film are marked. Tap any to listen.</p>
+    <div id="voices"></div>
+  </section>
+</main>
+
+<script src="engine.js"></script>
+<script src="characters.js"></script>
+<script src="moments.js"></script>
+<script src="film.js"></script>
+<script src="act1.js"></script>
+<script src="act2.js"></script>
+<script src="feb.js"></script>
+<script src="jan.js"></script>
+<script src="jan2.js"></script>
+<script src="feb2.js"></script>
+<script src="mar.js"></script>
+<script src="apr1.js"></script>
+<script src="apr.js"></script>
+<script src="may.js"></script>
+<script src="jun.js"></script>
+<script src="jul.js"></script>
+<script src="jul2.js"></script>
+<script src="aug.js"></script>
+<script src="aug2.js"></script>
+<script src="sep.js"></script>
+<script src="likes.js"></script>
+<script src="more.js"></script>
+<script src="sep2.js"></script>
+<script src="sep3.js"></script>
+<script src="music1.js"></script>
+<script src="score.js"></script>
+<script src="voicelist.js"></script>
+<script src="player.js"></script>
