@@ -2,6 +2,7 @@
 'use strict';
 finalizeFilm();composeScore();
 const STILLS=/^#t=/.test(location.hash);
+const EXPORT={on:false,rec:null,chunks:[],dest:null,t0:0};
 /* scene assets are built on demand and dropped again once the film has moved on (an hour of painted layers would not fit in memory) */
 const ASSETS=[],PREP_MS=[];
 function ensure(i){if(!ASSETS[i]){const t0=performance.now();ASSETS[i]=SC[i].prep()||{};PREP_MS[i]=Math.round(performance.now()-t0);}return ASSETS[i];}
@@ -201,7 +202,6 @@ if(document.fonts&&document.fonts.load){
 {const m=/^#t=([\d.]+)$/.exec(location.hash);if(m){const T=parseFloat(m[1]),go=()=>{seek(T);big.hidden=true;};go();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>setTimeout(go,150));}}
 
 /* ---------- Export: records the film in real time at 1920×1080 with sound to a .webm (Chrome / Edge) ---------- */
-const EXPORT={on:false,rec:null,chunks:[],dest:null,t0:0};
 const exBtn=$('exportBtn'),exMsg=$('exportMsg');
 function exportStart(){
   if(EXPORT.on)return;

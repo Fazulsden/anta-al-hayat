@@ -28,7 +28,7 @@ function s3_photo(ctx,im,a,z,o={}){
 /* ---------- a line of his, big across the frame; a = presence 0..1 ---------- */
 function s3_big(ctx,text,a,o={}){
   if(a<=0)return;
-  const cy=o.y??320,size=o.size??58,lh=Math.round(size*1.22),maxW=o.maxW??1000,cx=o.x??640,rise=(1-a)*12;
+  const cy=o.y??320,size=o.size??58,lh=Math.round(size*(o.lhm||1.22)),maxW=o.maxW??1000,cx=o.x??640,rise=(1-a)*12;
   ctx.save();ctx.globalAlpha=a;
   if(o.dark){ctx.fillStyle=`rgba(3,3,7,${o.dark.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
   ctx.font=`${o.italic?'italic ':''}600 ${size}px "Cormorant Garamond",serif`;
@@ -53,6 +53,13 @@ function s3_room(){const c=mk(W,H),g=c.getContext('2d');
   g.fillStyle='#1c1720';g.beginPath();g.moveTo(0,560);g.quadraticCurveTo(640,520,W,560);g.lineTo(W,720);g.lineTo(0,720);g.closePath();g.fill();
   g.fillStyle='#2a2230';ell(g,760,560,180,40);g.fill();g.fillStyle='#241d2a';ell(g,620,600,260,46);g.fill();
   return c;}
+/* the light under the door on the left, as in `sixsep` (the party has wound down: k scales it) */
+function s3_doorLight(ctx,lt,k){
+  if(k<=0)return;const v=(0.17+0.03*Math.sin(lt*1.1)+0.02*Math.sin(lt*3.7))*k;
+  glow(ctx,175,545,230,'#ffb866',v);
+  ctx.fillStyle=`rgba(255,196,120,${(0.4*k).toFixed(3)})`;ctx.fillRect(74,538,202,4);
+  ctx.fillStyle=`rgba(255,196,120,${(0.12*k).toFixed(3)})`;ctx.fillRect(275,54,2,486);
+}
 /* the edges of the frame fall away into the dark */
 function s3_vignette(){const c=mk(W,H),g=c.getContext('2d');
   const v=g.createRadialGradient(640,340,220,640,340,820);v.addColorStop(0,'rgba(3,3,8,0)');v.addColorStop(0.6,'rgba(3,3,8,.35)');v.addColorStop(1,'rgba(3,3,8,.9)');g.fillStyle=v;g.fillRect(0,0,W,H);
@@ -82,66 +89,68 @@ function s3_seedOf(o){return o.seed||907;}
    ================================================================================================ */
 /* the lines he holds big across a black frame (also narration); the third is one screen in three parts, the part she told him larger */
 const S3_WH_BIG=[
-  {at:21.0,until:27.6,text:'The very thing you hated me for was the very thing I hated in myself, us waqt.',size:60,y:318},
-  {at:28.0,until:34.4,text:'And for this, the only witness that matters to me is my Hajj. And mera ALLAH, jisne mujhe bulaya tha.',size:56,y:318},
+  {at:25.4,until:32.2,text:'The very thing you hated me for was the very thing I hated in myself, us waqt.',size:60,y:318},
+  {at:32.6,until:40.8,text:'And for this, the only witness that matters to me is my Hajj. And mera ALLAH, jisne mujhe bulaya tha.',size:56,y:318},
 ];
 const S3_WH_NOTES=[
-  {at:40.6,text:'I even have notes.',size:46,y:176},
-  {at:42.4,text:'You told me: write it down thirty minutes before sleeping.',size:66,y:322},
-  {at:46.0,text:'I am glad this is what I did.',size:46,y:472},
+  {at:48.5,text:'I even have notes.',size:46,y:176},
+  {at:51.9,text:'You told me: write it down thirty minutes before sleeping.',size:66,y:322},
+  {at:55.9,text:'I am glad this is what I did.',size:46,y:472},
 ];
-scene({id:'whathappened',name:'What happened that day',when:'2026-09-06T23:45',bars:20,fin:['#000000',1.4],fout:['#000000',1.6],
+/* the black screens: the two big lines (a 0.4 s dip in at 25.0, a 1 s fade back to the room at 40.8), the notes screen (dip at 48.0, stays black into the photos at 59.8) */
+const S3_WH_T={dip1:25.0,up1:40.8,dip2:48.0,notes:59.8,photo:[[60.6,66.0],[66.0,71.4],[71.4,99]]};
+scene({id:'whathappened',name:'What happened that day',when:'2026-09-06T23:45',bars:23,fin:['#000000',1.4],fout:['#000000',1.6],
   note:'the same dark room, later. Fabeha large in the frame and lit softly, listening, a small frown that softens while he tells her what the tease did to him; three of his lines held big across a black frame — the one about the Hajj, and the notes she told him to write, her part of it larger; then the three screenshots of his own note, “What happened”, written at 02:44 on 7 September, lifted into the frame one after another.',
   tag:'“What happened” · 7 September 2026, 02:44',
   prep(){return{room:s3_room(),vig:s3_vignette(),notes:[s3_img('note1.jpg'),s3_img('note2.jpg'),s3_img('note3.jpg')]};},
   draw(ctx,lt,A){
-    /* the black screens: the two big lines back to back (21–34.4), then the notes screen that stays black into the photos */
-    const dark=Math.max(smooth(21.0,21.7,lt)*(1-smooth(34.0,34.7,lt)),smooth(40.0,40.7,lt));
-    const toNotes=smooth(50.6,51.4,lt);
-    /* the room and her */
+    const Tt=S3_WH_T;
+    const dark=Math.max(smooth(Tt.dip1,Tt.dip1+0.4,lt)*(1-smooth(Tt.up1,Tt.up1+1.0,lt)),smooth(Tt.dip2,Tt.dip2+0.4,lt));
+    const toNotes=smooth(Tt.notes,Tt.notes+0.8,lt);
+    /* the room and her: the same pool of light as the call, the door light lower now; her frown softens while he speaks */
     ctx.drawImage(A.room,0,0);
-    const soft=smooth(6,34,lt);
+    s3_doorLight(ctx,lt,0.6*(1-dark));
+    const soft=smooth(8,42,lt);
     s3_her(ctx,lt,A,{light:1-0.85*dark,look:0.05*Math.sin(lt*0.5),smile:lerp(0.1,0.3,soft),brow:lerp(-0.4,0.12,soft),tilt:0.03*Math.sin(lt*0.37)+0.02,seed:907});
     if(dark>0){ctx.fillStyle=`rgba(3,3,7,${(0.96*dark).toFixed(3)})`;ctx.fillRect(0,0,W,H);}
-    for(const b of S3_WH_BIG)s3_big(ctx,b.text,smooth(b.at+0.2,b.at+0.9,lt)*(1-smooth(b.until-0.7,b.until-0.1,lt)),{y:b.y,size:b.size,maxW:1000});
+    for(const b of S3_WH_BIG)s3_big(ctx,b.text,smooth(b.at,b.at+0.8,lt)*(1-smooth(b.until-0.6,b.until,lt)),{y:b.y,size:b.size,maxW:1000});
     /* the notes screen: three parts, each staying as the next arrives */
-    const nOut=1-smooth(50.6,51.2,lt);
-    for(const b of S3_WH_NOTES)s3_big(ctx,b.text,smooth(b.at,b.at+0.7,lt)*nOut,{y:b.y,size:b.size,maxW:1000});
-    /* the notes */
+    const nOut=1-smooth(Tt.notes,Tt.notes+0.7,lt);
+    for(const b of S3_WH_NOTES)s3_big(ctx,b.text,smooth(b.at,b.at+0.8,lt)*nOut,{y:b.y,size:b.size,maxW:1000});
+    /* the notes: each fades in over 0.6 s with a slow push-in, the one before it gone first (no double exposure of the text) */
     if(toNotes>0){
       ctx.fillStyle=`rgba(3,3,7,${(0.97*toNotes).toFixed(3)})`;ctx.fillRect(0,0,W,H);
       glow(ctx,640,360,620,'#c89a6a',0.12*toNotes);
-      /* each note comes in over the one before it (no dip to black between them); the one underneath is dropped once it is covered */
-      const T0=[51.2,56.1,61.0],T1=[56.1,61.0,67.0];
-      for(let k=0;k<3;k++){const a=smooth(T0[k]-0.3,T0[k]+0.5,lt)*(1-smooth(T1[k]+0.5,T1[k]+0.8,lt));if(a<=0)continue;
-        const z=1+0.06*smooth(T0[k],T1[k],lt);
-        s3_photo(ctx,A.notes[k],a*toNotes,z,{h:H-26,cy:H/2-2,crop:s3_noteCrop(A.notes[k]),r:12});}
+      Tt.photo.forEach(([t0,t1],k)=>{const a=smooth(t0,t0+0.6,lt)*(1-smooth(t1-0.5,t1,lt));if(a<=0)return;
+        const z=1+0.05*smooth(t0,Math.min(t1,t0+6),lt);
+        s3_photo(ctx,A.notes[k],a*toNotes,z,{h:H-26,cy:H/2-2,crop:s3_noteCrop(A.notes[k]),r:12});});
     }
   },
   subs:[
-    [0.8,6.0,'What happened that day. You teased me, with your love language: you sound like mein flashy kapre phenogi.'],
-    [6.4,11.4,'And that sentence. I hated that Fazul. No one has the right to say flashy kapre phenogi to you.'],
-    [11.8,17.2,'And I started crying, because: mein aise kaise bologa, bro? The very Fazul you hate is the Fazul I hated.'],
-    [17.6,20.8,'Please know: your four things, I had memorised them.'],
-    [21.6,27.0,'The very thing you hated me for was the very thing I hated in myself, us waqt.'],
-    [28.4,33.8,'And for this, the only witness that matters to me is my Hajj. And mera ALLAH, jisne mujhe bulaya tha.'],
-    [35.0,39.8,'That day I never commented on your clothes. I cried because I cannot character-assassinate you.'],
-    [40.8,42.6,'I even have notes.'],
-    [42.8,47.0,'You told me: write it down thirty minutes before sleeping.'],
-    [47.2,50.4,'I am glad this is what I did.'],
+    [0.8,7.0,'What happened that day. You teased me, with your love language: you sound like mein flashy kapre phenogi.'],
+    [7.4,13.6,'And that sentence. I hated that Fazul. No one has the right to say flashy kapre phenogi to you.'],
+    [14.0,20.8,'And I started crying, because: mein aise kaise bologa, bro? The very Fazul you hate is the Fazul I hated.'],
+    [21.2,24.6,'Please know: your four things, I had memorised them.'],
+    [25.6,31.6,'The very thing you hated me for was the very thing I hated in myself, us waqt.'],
+    [32.8,40.2,'And for this, the only witness that matters to me is my Hajj. And mera ALLAH, jisne mujhe bulaya tha.'],
+    [42.4,47.6,'That day I never commented on your clothes. I cried because I cannot character-assassinate you.'],
+    [48.6,51.6,'I even have notes.'],
+    [52.0,55.6,'You told me: write it down thirty minutes before sleeping.'],
+    [56.0,59.2,'I am glad this is what I did.'],
   ],
   score({add,T,pad}){
+    /* one piano line, carried on from the chat; the pads barely there, lower still under the black screens */
     const line=(bar,seq,vel)=>{let beat=0;for(const[m,d]of seq){if(m)add(T(bar,beat),'piano',{midi:m,dur:d*BEAT*1.6,vel});beat+=d;}};
     const ch=['Em','Cmaj7','G','Dsus','Em7','Am7','Cadd9','Dsus'];
-    const quiet=b=>(b>=6&&b<10)||(b>=12&&b<15);                 /* the black screens: bars 6–10 and 12–15 */
-    for(let b=0;b<20;b++)pad(T(b),quiet(b)?(b%2?'Em7':'Em'):ch[b%8],1.05,quiet(b)?0.12:b>=15?0.16:0.2,'pad');
-    line(1,[[64,2],[67,1],[71,1]],0.3);line(2,[[69,3],[67,1]],0.28);line(3,[[64,2],[62,1],[64,1]],0.28);line(4,[[59,4]],0.26);
-    line(6,[[52,4]],0.22);line(7,[[0,2],[55,2]],0.2);line(8,[[52,4]],0.2);line(9,[[0,2],[59,2]],0.18);
-    line(10,[[64,2],[67,1],[71,1]],0.3);line(11,[[72,2],[71,1],[69,1]],0.28);
-    line(12,[[67,4]],0.2);line(13,[[0,2],[64,2]],0.18);line(14,[[62,4]],0.18);
-    line(15,[[71,2],[0,1],[69,1]],0.2);line(16,[[67,3],[0,1]],0.18);line(17,[[64,2],[0,1],[62,1]],0.18);line(18,[[59,4]],0.16);
+    const quiet=b=>(b>=7&&b<13)||b>=14;
+    for(let b=0;b<23;b++)pad(T(b),quiet(b)?(b%2?'Em7':'Em'):ch[b%8],1.05,quiet(b)?0.1:0.13,'pad');
+    line(0,[[64,2],[67,1],[71,1]],0.3);line(1,[[69,3],[67,1]],0.28);line(2,[[64,2],[62,1],[64,1]],0.28);line(3,[[59,4]],0.26);
+    line(4,[[67,2],[64,1],[62,1]],0.28);line(5,[[64,3],[0,1]],0.26);line(6,[[71,2],[69,1],[67,1]],0.28);line(7,[[64,4]],0.24);
+    line(8,[[0,1],[52,3]],0.22);line(9,[[55,2],[59,2]],0.22);line(10,[[52,4]],0.2);line(11,[[0,2],[59,2]],0.2);line(12,[[62,2],[64,2]],0.22);
+    line(13,[[67,2],[71,1],[69,1]],0.3);line(14,[[64,3],[0,1]],0.26);line(15,[[0,2],[59,2]],0.2);line(16,[[64,4]],0.2);line(17,[[62,2],[0,1],[64,1]],0.2);
+    line(18,[[59,4]],0.18);line(19,[[64,2],[67,1],[71,1]],0.22);line(20,[[69,3],[67,1]],0.2);line(21,[[64,2],[62,1],[64,1]],0.2);line(22,[[59,4]],0.18);
   },
-  amb(lt){return{room:lt<51?0.22:0.16};},
+  amb(lt){return{room:lt<S3_WH_T.notes?0.22:0.16};},
 });
 
 /* ================================================================================================

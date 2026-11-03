@@ -328,49 +328,54 @@ function s2_handOverEyes(ctx,u){
 }
 function s2_mmss(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
 const S2_AFTER=[
-  {at:27.4,who:'her',time:'00:32',text:'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.'},
-  {at:29.6,who:'her',time:'00:45',text:'Apologies if youre hurt'},
-  {at:31.2,who:'me', time:'00:45',text:'I just cried'},
-  {at:33.0,who:'her',time:'00:45',text:'Look hurting you i would never want that ever'},
-  {at:35.0,who:'her',time:'00:47',text:'You crying bec of me is the last thing i want in my entire life'},
-  {at:37.2,who:'her',time:'00:53',text:'I love you alot to lose you at all'},
+  {at:25.8,who:'her',time:'00:32',text:'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.'},
+  {at:31.8,who:'her',time:'00:45',text:'Apologies if youre hurt'},
+  {at:35.2,who:'me', time:'00:45',text:'I just cried'},
+  {at:38.6,who:'her',time:'00:45',text:'Look hurting you i would never want that ever'},
+  {at:42.2,who:'her',time:'00:47',text:'You crying bec of me is the last thing i want in my entire life'},
+  {at:47.2,who:'her',time:'00:53',text:'I love you alot to lose you at all'},
 ];
-scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:14,fin:['#000000',1.4],fout:['#000000',1.8],
+/* the three beats: the house (0–7.4, a dip to black), the call in the dark room (7.4–24.4, fades up from the dip, dips again), the chat after midnight (24.4–end) */
+const S2_SIX={house:7.4,chat:24.4};
+scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:16,fin:['#000000',1.4],fout:['#000000',1.6],
   note:'Usman’s birthday: the house full, the cake glowing through a doorway, shoes by the door; the dark room he went into, the phone propped, her face small and lit on the video call — laughing, then not; his hand over his eyes; and the chat after midnight.',
   tag:'“You do mean a lot to me.”',
   prep(){return{R:rooms(),party:s2_partyLayer(),room:s2_callRoom()};},
   draw(ctx,lt,A){
-    if(lt<7.2){
+    if(lt<S2_SIX.house){
       /* the house, full */
-      const dx=lerp(0,-50,smooth(0,7,lt)),bob=Math.sin(lt*1.7)*3;
+      const dx=lerp(0,-50,smooth(0,7.2,lt)),bob=Math.sin(lt*1.7)*3;
       ctx.save();ctx.translate(dx,bob);
       ctx.drawImage(A.party,-20,0);
       for(let i=0;i<15;i++){const t=i/14,x=t*W+10,y=(1-t)*(1-t)*60+2*(1-t)*t*130+t*t*70,tw=0.6+0.4*Math.sin(lt*3+i*1.7);glow(ctx,x,y,34,'#ffd27a',0.3*tw);ctx.fillStyle=i%3===0?'#ffd27a':'#ffe9b8';ell(ctx,x,y+2,3.5,5);ctx.fill();}
       for(let k=0;k<6;k++){const fx=956+k*14,fl=0.8+0.2*Math.sin(lt*13+k*2.1);ctx.fillStyle='#fff3c0';ell(ctx,fx,416-4*fl,2.4,6*fl);ctx.fill();glow(ctx,fx,414,26,'#ffb347',0.35*fl);}
       glow(ctx,970,330,420,'#ffc070',0.22+0.04*Math.sin(lt*2.3));
       ctx.restore();
-      const dk=smooth(6.4,7.2,lt);if(dk>0){ctx.fillStyle=`rgba(0,0,0,${dk.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
+      const dk=smooth(6.6,7.4,lt);if(dk>0){ctx.fillStyle=`rgba(0,0,0,${dk.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
       return;
     }
-    if(lt<26.4){
-      /* the dark room, the phone propped, her face on the call */
+    if(lt<S2_SIX.chat){
+      /* the dark room, the phone propped, her face on the call; the same warm pool of light the next scenes keep */
       ctx.drawImage(A.room,0,0);
       const v=0.26+0.06*Math.sin(lt*2.9)+0.04*Math.sin(lt*7.1);
       glow(ctx,175,545,240,'#ffb866',v);ctx.fillStyle=`rgba(255,196,120,${(0.5+0.3*v).toFixed(3)})`;ctx.fillRect(74,538,202,5);ctx.fillStyle='rgba(255,196,120,.2)';ctx.fillRect(275,54,2,486);
-      const laugh=lt<15.6,sad=smooth(17.0,20.0,lt);
-      const o={timer:s2_mmss(1812+(lt-7.2)),talk:laugh?((lt*0.9)%2<1.2):(lt>21&&lt<24&&(lt*1.1)%2<0.8),
+      glow(ctx,640,300,560,'#ffb27a',0.1);
+      const laugh=lt<14.8,sad=smooth(16.2,19.4,lt);
+      const o={timer:s2_mmss(1812+(lt-S2_SIX.house)),talk:laugh?((lt*0.9)%2<1.2):(lt>19.6&&lt<22.4&&(lt*1.1)%2<0.8),
         smile:laugh?0.75+0.2*Math.sin(lt*1.3):lerp(0.75,0.15,sad),eyes:laugh&&((lt*0.7)%3<0.9)?'happy':undefined,
         look:laugh?0.12*Math.sin(lt*0.6):lerp(0.1,0,sad),tilt:laugh?0.06*Math.sin(lt*0.8):lerp(0.04,0.1,sad),brow:lerp(0,0.6,sad)};
       ctx.save();ctx.translate(640,400);ctx.rotate(-0.035);
       const S=drawPhone(ctx,-150,-300,300,600,{screen:'#000'});
       s2_videoCall(ctx,S,lt,o);phoneTop(ctx,S,{time:lt<16?'00:01':'00:02'});
       ctx.restore();
-      ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,640,640,320,'#8fb0d8',0.16);glow(ctx,640,400,420,'#6a86b0',0.08);ctx.restore();
-      s2_handOverEyes(ctx,smooth(16.0,19.0,lt));
-      const cl=0.5*smooth(17.2,19.8,lt)*(1-0.35*smooth(23,26,lt));
+      ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,640,620,340,'#ffc090',0.12);glow(ctx,640,400,420,'#8a96b0',0.05);ctx.restore();
+      s2_handOverEyes(ctx,smooth(15.4,18.4,lt));
+      const cl=0.5*smooth(16.6,19.2,lt)*(1-0.35*smooth(21.4,24.0,lt));
       if(cl>0){const hh=cl*H*0.55;ctx.fillStyle=vgrad(ctx,hh-60,hh,[[0,'rgba(2,2,6,1)'],[1,'rgba(2,2,6,0)']]);ctx.fillRect(0,0,W,hh);ctx.fillStyle='rgba(2,2,6,1)';ctx.fillRect(0,0,W,Math.max(0,hh-60));
         ctx.fillStyle=vgrad(ctx,H-hh,H-hh+60,[[0,'rgba(2,2,6,0)'],[1,'rgba(2,2,6,1)']]);ctx.fillRect(0,H-hh,W,hh);ctx.fillStyle='rgba(2,2,6,1)';ctx.fillRect(0,H-hh+60,W,Math.max(0,hh-60));}
-      const dk=smooth(25.6,26.4,lt);if(dk>0){ctx.fillStyle=`rgba(0,0,0,${dk.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
+      /* up from the dip, and down into the next one */
+      const fi=1-smooth(S2_SIX.house,S2_SIX.house+1.1,lt),dk=smooth(23.6,24.4,lt),k=Math.max(fi,dk);
+      if(k>0){ctx.fillStyle=`rgba(0,0,0,${k.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
       return;
     }
     /* after midnight */
@@ -378,26 +383,30 @@ scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:14,fin:['#000
     ctx.save();ctx.globalAlpha=0.45;ctx.drawImage(A.R.night,0,0);ctx.restore();
     const S=drawPhoneHand(ctx,lt,{x:475,y:44,w:300,h:640});
     chatPanel(ctx,S,S2_AFTER,lt,{name:'Fabeha',status:'online'});
-    phoneTop(ctx,S,{time:lt<29.6?'00:32':lt<35?'00:45':lt<37.2?'00:47':lt<39.2?'00:53':'00:55'});
+    phoneTop(ctx,S,{time:lt<31.8?'00:32':lt<42.2?'00:45':lt<47.2?'00:47':'00:53'});
     ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,S.x+S.w/2,S.y+S.h*0.75,380,'#7fa6d8',0.14);ctx.restore();
-    const fi=1-smooth(26.4,27.2,lt);if(fi>0){ctx.fillStyle=`rgba(0,0,0,${fi.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
+    const fi=1-smooth(S2_SIX.chat,S2_SIX.chat+1.0,lt);if(fi>0){ctx.fillStyle=`rgba(0,0,0,${fi.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
   },
   subs:[
-    [0.8,5.6,'6 September. Usman’s birthday. The house was full, and everyone knew which room I had gone to.'],
-    [8.2,12.0,'We were laughing. She teased me a little.'],
+    [0.8,6.4,'6 September. Usman’s birthday. The house was full, and everyone knew which room I had gone to.'],
+    [8.6,12.2,'We were laughing. She teased me a little.'],
     [14.0,18.6,'And months of it came up at once. I started crying.'],
-    [27.6,29.4,'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.','her'],
-    [29.8,31.0,'Apologies if youre hurt','her'],
-    [31.4,32.8,'I just cried','him'],
-    [33.2,34.8,'Look hurting you i would never want that ever','her'],
-    [35.2,37.0,'You crying bec of me is the last thing i want in my entire life','her'],
-    [37.4,39.0,'I love you alot to lose you at all','her'],
+    [26.0,31.6,'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.','her'],
+    [32.0,35.0,'Apologies if youre hurt','her'],
+    [35.4,38.4,'I just cried','him'],
+    [38.8,42.0,'Look hurting you i would never want that ever','her'],
+    [42.4,47.0,'You crying bec of me is the last thing i want in my entire life','her'],
+    [47.4,50.6,'I love you alot to lose you at all','her'],
   ],
-  score({T,hit,pad,melody,THEME_B,THEME_B_CH}){
-    pad(T(0),'G',2,0.18,'pad');
-    for(let b=2;b<8;b++)pad(T(b),b%2?'Em7':'Em',1.05,0.14,'pad');
-    for(let b=8;b<14;b++){pad(T(b),THEME_B_CH[b-8],1.05,0.14,'pad');melody(b,b-8,'piano',0,0.34,THEME_B);}
+  score({T,add,at,hit,pad,melody,THEME_B,THEME_B_CH}){
+    /* the house: one warm chord; the laughing: a thin pad and three notes; the crying: almost nothing; after midnight: her theme begins on the piano alone, and carries into the next scene */
+    pad(T(0),'G',2.2,0.2,'pad');
+    pad(T(2,1),'Em7',1.3,0.14,'pad');pad(T(3,2),'Cmaj7',1.2,0.13,'pad');
+    [[9.0,76],[10.6,74],[12.4,71]].forEach(([t,m])=>add(at(t),'piano',{midi:m,dur:2.4,vel:0.26}));
+    pad(T(4,2),'Em',2.6,0.08,'pad');add(at(16.4),'piano',{midi:52,dur:4,vel:0.2});
+    pad(T(7,2),'Em',0.55,0.12,'pad');
+    for(let b=8;b<16;b++){pad(T(b),THEME_B_CH[b-8],1.05,0.13,'pad');melody(b,b-8,'piano',0,0.3,THEME_B);}
     for(const m of S2_AFTER)hit(m.at,'tick',{hi:m.who==='her'});
   },
-  amb(lt){return lt<7.2?{crowd:0.3,room:0.1}:lt<26.4?{crowd:0.1,room:0.22}:{room:0.26};},
+  amb(lt){return lt<S2_SIX.house?{crowd:0.3*(1-smooth(4.8,7.2,lt)),room:0.12}:{room:0.22};},
 });
