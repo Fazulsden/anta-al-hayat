@@ -56,7 +56,7 @@ function s4_band(ctx,text,a,o={}){
   ctx.textAlign='center';
   if(o.arabic){ctx.textBaseline='alphabetic';ctx.font=`400 ${Math.round(size*0.4)}px "Noto Nastaliq Urdu",serif`;ctx.fillStyle='#ffd3a6';ctx.shadowColor='rgba(255,186,140,.45)';ctx.shadowBlur=14;ctx.fillText(o.arabic,640,cy-th/2-20+rise);}
   ctx.textBaseline='middle';ctx.font=`600 ${size}px "Cormorant Garamond",serif`;
-  ctx.shadowColor='rgba(255,186,140,.45)';ctx.shadowBlur=20;ctx.fillStyle='#fff4e6';
+  ctx.shadowColor=o.gold?'rgba(255,196,90,.6)':'rgba(255,186,140,.45)';ctx.shadowBlur=o.gold?26:20;ctx.fillStyle=o.gold?'#f3c66a':'#fff4e6';
   for(let k=0;k<lines.length;k++)ctx.fillText(lines[k],640,cy-th/2+lh/2+k*lh+rise);
   ctx.restore();
 }
@@ -140,6 +140,39 @@ scene({id:'iltija',name:'Eik hi iltija',when:'2026-09-06T23:50',bars:21,fin:['#0
       if(i>=4){let beat=0;for(const[m,d]of THEME_B[i]){if(d>=2)add(T(b,beat),'strings',{notes:[m-12],dur:d*BEAT,vel:0.13});beat+=d;}}
     }
     pad(T(20),'Em',1.3,0.24,'strings');add(T(20),'piano',{midi:52,dur:4,vel:0.22});add(T(20),'piano',{midi:64,dur:4,vel:0.18});add(T(20,2),'piano',{midi:71,dur:3,vel:0.14});
+  },
+  amb(){return{room:0.14};},
+});
+
+
+/* ---------- Who would — his questions, in gold, between “What should I let go?” and “Please don’t be” ---------- */
+const S4_WHO=[
+  {at:1.4, until:7.6, size:58,text:'Who would tell me the meanings of the dreams I have?'},
+  {at:8.0, until:13.6,size:58,text:'Who would tell me what skincare to use?'},
+  {at:14.0,until:22.0,size:54,text:'Who would get me mutton raan, their second-best dish, the first time I come to visit their house?'},
+  {at:22.4,until:29.6,size:56,text:'Who would rant to me about their whole day, and their masle, and I would listen?'},
+  {at:30.0,until:36.0,size:60,text:'Who would look at me with those eyes full of love?'},
+  {at:36.4,until:42.4,size:60,text:'Who would I look at, with eyes full of love?'},
+  {at:42.8,until:48.2,size:60,text:'Who would I travel the world with?'},
+  {at:48.6,until:54.2,size:60,text:'Who would I see the aurora lights with?'},
+  {at:55.0,until:62.6,size:54,text:'And how the perfume was on her, when we met, on 29 August.'},
+];
+scene({id:'whowould',name:'Who would',when:'2026-09-06T23:47:30',bars:20,fin:['#000000',1.4],fout:['#000000',1.6],
+  note:'the same room and light, Fabeha softly behind a dark band; his questions in gold, one at a time: the dreams, the skincare, the mutton raan, the rants, the eyes, the world, the aurora; and the perfume on her, 29 August.',
+  tag:'“Who would I see the aurora lights with?”',
+  prep(){return{room:s3_room(),vig:s3_vignette()};},
+  draw(ctx,lt,A){
+    const dim=0.4*smooth(0.8,1.8,lt)*(1-smooth(63.2,64.4,lt));
+    s4_room(ctx,lt,A,1+0.03*smooth(0,66,lt),{smile:0.3+0.12*smooth(28,34,lt),brow:0.03,tilt:0.04*Math.sin(lt*0.3)+0.02,blush:0.34,seed:931});
+    if(dim>0){ctx.fillStyle=`rgba(3,3,7,${dim.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
+    for(const c of S4_WHO){const a=smooth(c.at-0.2,c.at+0.7,lt)*(1-smooth(c.until-0.6,c.until+0.1,lt));s4_band(ctx,c.text,a,{size:c.size,gold:true,y:330});}
+  },
+  subs:S4_WHO.map(c=>[c.at+0.2,c.until-0.6,c.text]),
+  score({add,T,at,hit,pad,melody,THEME_B,THEME_B_CH}){
+    for(let i=0;i<8;i++){pad(T(i),THEME_B_CH[i],1.05,0.2,'strings');if(i>=2)melody(i,i,'piano',0,0.22,THEME_B);}
+    for(let i=0;i<8;i++){const b=8+i;pad(T(b),THEME_B_CH[i],1.05,0.22+0.08*i/7,'strings');melody(b,i,'piano',0,0.26,THEME_B);}
+    for(let b=16;b<20;b++)pad(T(b),['Em','Cmaj7','G','Em'][b-16],1.05,0.22,'strings');
+    for(const c of S4_WHO)hit(c.at+0.3,'chime',{midi:[88,91,95,91,98,95,100,103,91][S4_WHO.indexOf(c)],vel:0.22});
   },
   amb(){return{room:0.14};},
 });
