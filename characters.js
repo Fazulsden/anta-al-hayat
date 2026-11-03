@@ -2,10 +2,11 @@
    face-framing strands, strong brows, dark eyes, a wide warm smile, small gold earrings.
    Outfits follow the real days: cream knit sweater + sunglasses on her head (Malam Jabba),
    tan sherpa coat + black beanie (the van / Kalam snow), white-and-blue floral kurta,
-   cream sweater + navy backpack (IBA), black with gold sparkle (evenings), sage shirt (sunflowers). */
+   cream sweater + navy backpack (IBA), black with gold sparkle (evenings), sage shirt (sunflowers),
+   grey-white kurta with a dark-grey paisley print and an embroidered neckline (30 June, the car). */
 'use strict';
 const FB={hair:'#1a1416',hairMid:'#2d2127',hairHi:'#5a4756',skin:'#f4dcc8',skinSh:'#e3bca4',blush:'#ec8c82',eye:'#231616',iris:'#4a2f26',irisHi:'#8a5a44',brow:'#2a1d20',lip:'#c36f6a',lipDark:'#9e4f50',teeth:'#fffaf6',gold:'#e3b55c'};
-const SLEEVE={sweater:'#e8dece',coat:'#9c7a59',kurta:'#f1ece3',uni:'#e8dece',black:'#15121a',sage:'#a3b4a3',home:'#dfbfca'};
+const SLEEVE={sweater:'#e8dece',coat:'#9c7a59',kurta:'#f1ece3',uni:'#e8dece',black:'#15121a',sage:'#a3b4a3',home:'#dfbfca',floral:'#e8e7e3'};
 
 function drawFabeha(ctx,x,y,s,o={}){
   const t=o.t||0,wind=o.wind||0,hair=o.hair||'down',len=o.len??190;
@@ -181,6 +182,31 @@ function fbBody(ctx,o,t){
       ctx.fillStyle='#9aab9a';for(let y=104;y<190;y+=22){circle(ctx,0,y,2.2);ctx.fill();}
       break;}
     case 'home':{torso('#e7c9d3');collar('#d9b6c2');break;}
+    case 'floral':{
+      /* 30 June, in the car: a light grey-white kurta with small dark-grey leaf / paisley marks all over,
+         an embroidered neckline, long loose sleeves (photos/date30.jpg) */
+      torso('#ebeae6');
+      const r=rng(93);let row=0;
+      for(let gy=72;gy<198;gy+=14,row++){
+        for(let gx=-60+(row%2?7:0);gx<=60;gx+=14){
+          const x=gx+(r()-0.5)*5,y=gy+(r()-0.5)*5,a=r()*TAU,k=0.62+r()*0.22,leaf=r()<0.4;
+          ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.scale(k,k);ctx.globalAlpha*=0.85;
+          ctx.fillStyle=r()<0.5?'#575c66':'#6e737d';
+          if(leaf){for(const d of[-1,0,1]){ell(ctx,d*5,d*d*1.5,4,1.7,d*0.7);ctx.fill();}ctx.strokeStyle='rgba(70,74,84,.6)';ctx.lineWidth=0.8;ctx.beginPath();ctx.moveTo(-7,3);ctx.lineTo(7,3);ctx.stroke();}
+          else{ctx.beginPath();ctx.moveTo(0,-5.5);ctx.bezierCurveTo(4.5,-5.5,5.5,1,2.2,4.4);ctx.quadraticCurveTo(0,6.6,-2.2,4.4);ctx.bezierCurveTo(-5.5,1,-4.5,-5.5,0,-5.5);ctx.closePath();ctx.fill();
+            ctx.fillStyle='rgba(235,234,230,.55)';ell(ctx,0,0,1.6,2.6,0);ctx.fill();}
+          ctx.restore();
+        }
+      }
+      ctx.fillStyle='rgba(50,52,62,.08)';ctx.beginPath();ctx.moveTo(-66,88);ctx.bezierCurveTo(-30,100,10,120,60,96);ctx.lineTo(74,200);ctx.lineTo(50,200);ctx.bezierCurveTo(10,150,-40,130,-74,120);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#ebeae6';ell(ctx,-58,86,15,20,0.3);ctx.fill();ell(ctx,58,86,15,20,-0.3);ctx.fill();
+      ctx.fillStyle='rgba(87,92,102,.85)';for(const[sx,sy,sa]of[[-60,80,0.5],[-54,94,-0.3],[60,82,-0.5],[54,96,0.3]]){ell(ctx,sx,sy,3,1.5,sa);ctx.fill();}
+      collar('#ebeae6');
+      ctx.strokeStyle='#e0dfda';ctx.lineWidth=4;ell(ctx,0,62,21,9);ctx.stroke();
+      ctx.strokeStyle='#575c66';ctx.lineWidth=1;ell(ctx,0,62,23.5,11);ctx.stroke();ell(ctx,0,62,18.5,7.4);ctx.stroke();
+      ctx.fillStyle='#575c66';for(let k=0;k<13;k++){const a=k/12*Math.PI;circle(ctx,Math.cos(a)*21,62+Math.sin(a)*9,0.9);ctx.fill();}
+      ctx.beginPath();ctx.moveTo(0,72);ctx.lineTo(0,92);ctx.stroke();for(const y of[76,84,91]){circle(ctx,0,y,1);ctx.fill();}
+      break;}
     default:{
       torso('#efe6d6');
       ctx.strokeStyle='rgba(120,100,70,.12)';ctx.lineWidth=1.4;for(let x=-62;x<62;x+=8){ctx.beginPath();ctx.moveTo(x,86);ctx.quadraticCurveTo(x-3,140,x-1,200);ctx.stroke();}
@@ -194,7 +220,7 @@ function fbBody(ctx,o,t){
 function fbArms(ctx,o,t){
   const col=SLEEVE[o.outfit||'sweater']||'#e8dece',glove=o.outfit==='coat';
   const hand=(x,y,rot)=>{ctx.fillStyle=glove?'#1c1c22':FB.skin;ell(ctx,x,y,9,12,rot);ctx.fill();};
-  ctx.strokeStyle=col;ctx.lineCap='round';ctx.lineWidth=22;
+  ctx.strokeStyle=col;ctx.lineCap='round';ctx.lineWidth=o.outfit==='floral'?27:22;
   if(o.arms==='lap'){ctx.beginPath();ctx.moveTo(-58,90);ctx.quadraticCurveTo(-70,150,-26,186);ctx.stroke();ctx.beginPath();ctx.moveTo(58,90);ctx.quadraticCurveTo(70,150,26,186);ctx.stroke();hand(-20,192,0.4);hand(20,192,-0.4);}
   else if(o.arms==='wave'){const a=Math.sin(t*7)*0.25;ctx.beginPath();ctx.moveTo(-58,90);ctx.quadraticCurveTo(-70,150,-26,186);ctx.stroke();hand(-20,192,0.4);ctx.beginPath();ctx.moveTo(58,88);ctx.quadraticCurveTo(84,70,92+a*20,30);ctx.stroke();hand(96+a*22,20,a);}
   else if(o.arms==='phone'){ctx.beginPath();ctx.moveTo(-58,90);ctx.quadraticCurveTo(-60,140,-14,146);ctx.stroke();ctx.beginPath();ctx.moveTo(58,90);ctx.quadraticCurveTo(60,140,14,146);ctx.stroke();ctx.fillStyle='#17171c';rrect(ctx,-16,118,32,54,6);ctx.fill();ctx.fillStyle='#cfe3ff';rrect(ctx,-13,122,26,46,4);ctx.fill();hand(-18,150,0.5);hand(18,150,-0.5);}

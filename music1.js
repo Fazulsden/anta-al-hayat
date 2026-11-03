@@ -58,7 +58,7 @@ scoreFor('majestic',({add,T,at,hit,pad,melody,arp,bassline,me})=>{
 });
 scoreFor('end',({add,T,at,hit,pad,melody,arp,bassline,me})=>{
   for(let b=0;b<4;b++){const c=THEME_CH[b+4];pad(T(b),c,1.05,0.5);melody(b,b+4,'box',12,0.5);add(T(b),'piano',{midi:CH[c].b+12,dur:BAR,vel:0.3});}
-  add(T(4),'pad',{notes:[43,55,59,62,67],dur:BAR*1.9,vel:0.6});[79,83,86,91].forEach((m,k)=>add(T(4,k*0.5),'box',{midi:m,vel:0.5}));add(T(5,1),'chime',{midi:103,vel:0.4});
+  add(T(4),'pad',{notes:[43,55,59,62,67],dur:BAR*2.9,vel:0.5});[79,83,86,91].forEach((m,k)=>add(T(4,k*0.5),'box',{midi:m,vel:0.5}));add(T(6,1),'chime',{midi:103,vel:0.35});
 });
 
 /* ambience: wind · waves · room · hum (the van, the car) */

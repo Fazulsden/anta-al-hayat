@@ -333,7 +333,7 @@ const S2_AFTER=[
   {at:35.2,who:'me', time:'00:45',text:'I just cried'},
   {at:38.6,who:'her',time:'00:45',text:'Look hurting you i would never want that ever'},
   {at:42.2,who:'her',time:'00:47',text:'You crying bec of me is the last thing i want in my entire life'},
-  {at:47.2,who:'her',time:'00:53',text:'I love you alot to lose you at all'},
+  {at:47.6,who:'her',time:'00:53',text:'I love you alot to lose you at all'},
 ];
 /* the three beats: the house (0–7.4, a dip to black), the call in the dark room (7.4–24.4, fades up from the dip, dips again), the chat after midnight (24.4–end) */
 const S2_SIX={house:7.4,chat:24.4};
@@ -383,20 +383,20 @@ scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:16,fin:['#000
     ctx.save();ctx.globalAlpha=0.45;ctx.drawImage(A.R.night,0,0);ctx.restore();
     const S=drawPhoneHand(ctx,lt,{x:475,y:44,w:300,h:640});
     chatPanel(ctx,S,S2_AFTER,lt,{name:'Fabeha',status:'online'});
-    phoneTop(ctx,S,{time:lt<31.8?'00:32':lt<42.2?'00:45':lt<47.2?'00:47':'00:53'});
+    phoneTop(ctx,S,{time:lt<31.8?'00:32':lt<42.2?'00:45':lt<47.6?'00:47':'00:53'});
     ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,S.x+S.w/2,S.y+S.h*0.75,380,'#7fa6d8',0.14);ctx.restore();
     const fi=1-smooth(S2_SIX.chat,S2_SIX.chat+1.0,lt);if(fi>0){ctx.fillStyle=`rgba(0,0,0,${fi.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
   },
   subs:[
-    [0.8,6.4,'6 September. Usman’s birthday. The house was full, and everyone knew which room I had gone to.'],
+    [0.8,6.5,'6 September. Usman’s birthday. The house was full, and everyone knew which room I had gone to.'],
     [8.6,12.2,'We were laughing. She teased me a little.'],
     [14.0,18.6,'And months of it came up at once. I started crying.'],
     [26.0,31.6,'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.','her'],
     [32.0,35.0,'Apologies if youre hurt','her'],
     [35.4,38.4,'I just cried','him'],
     [38.8,42.0,'Look hurting you i would never want that ever','her'],
-    [42.4,47.0,'You crying bec of me is the last thing i want in my entire life','her'],
-    [47.4,50.6,'I love you alot to lose you at all','her'],
+    [42.4,47.4,'You crying bec of me is the last thing i want in my entire life','her'],
+    [47.8,51.0,'I love you alot to lose you at all','her'],
   ],
   score({T,add,at,hit,pad,melody,THEME_B,THEME_B_CH}){
     /* the house: one warm chord; the laughing: a thin pad and three notes; the crying: almost nothing; after midnight: her theme begins on the piano alone, and carries into the next scene */

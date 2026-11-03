@@ -195,7 +195,7 @@ function feb_showPhoto(ctx,im,a,z){
   if(!feb_ready(im)||a<=0)return;
   ctx.save();ctx.globalAlpha=a;
   ctx.drawImage(feb_blur(im),0,0,W,H);ctx.fillStyle='rgba(20,14,6,.35)';ctx.fillRect(0,0,W,H);
-  const h=(H-56)*z,w=h*im.naturalWidth/im.naturalHeight,x=W/2-w/2,y=H/2-h/2-8;
+  const h=H*1.55*z,w=h*im.naturalWidth/im.naturalHeight,x=W/2-w/2,y=H*0.46-h*0.56;
   ctx.shadowColor='rgba(255,214,120,.55)';ctx.shadowBlur=46;ctx.fillStyle='#fff6e0';ctx.fillRect(x-6,y-6,w+12,h+12);ctx.shadowBlur=0;
   ctx.drawImage(im,x,y,w,h);
   const gl=ctx.createRadialGradient(x+w*0.2,y+h*0.15,0,x+w*0.2,y+h*0.15,h*0.9);gl.addColorStop(0,'rgba(255,236,190,.22)');gl.addColorStop(1,'rgba(255,236,190,0)');ctx.fillStyle=gl;ctx.fillRect(x,y,w,h);

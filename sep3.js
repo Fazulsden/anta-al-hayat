@@ -121,14 +121,14 @@ scene({id:'whathappened',name:'What happened that day',when:'2026-09-06T23:45',b
     if(toNotes>0){
       ctx.fillStyle=`rgba(3,3,7,${(0.97*toNotes).toFixed(3)})`;ctx.fillRect(0,0,W,H);
       glow(ctx,640,360,620,'#c89a6a',0.12*toNotes);
-      Tt.photo.forEach(([t0,t1],k)=>{const a=smooth(t0,t0+0.6,lt)*(1-smooth(t1-0.5,t1,lt));if(a<=0)return;
+      Tt.photo.forEach(([t0,t1],k)=>{const a=smooth(t0-0.1,t0+0.5,lt)*(1-smooth(t1-0.4,t1,lt));if(a<=0)return;
         const z=1+0.05*smooth(t0,Math.min(t1,t0+6),lt);
         s3_photo(ctx,A.notes[k],a*toNotes,z,{h:H-26,cy:H/2-2,crop:s3_noteCrop(A.notes[k]),r:12});});
     }
   },
   subs:[
     [0.8,7.0,'What happened that day. You teased me, with your love language: you sound like mein flashy kapre phenogi.'],
-    [7.4,13.6,'And that sentence. I hated that Fazul. No one has the right to say flashy kapre phenogi to you.'],
+    [7.4,13.7,'And that sentence. I hated that Fazul. No one has the right to say flashy kapre phenogi to you.'],
     [14.0,20.8,'And I started crying, because: mein aise kaise bologa, bro? The very Fazul you hate is the Fazul I hated.'],
     [21.2,24.6,'Please know: your four things, I had memorised them.'],
     [25.6,31.6,'The very thing you hated me for was the very thing I hated in myself, us waqt.'],
@@ -207,7 +207,7 @@ const S3_Q=[
   {at:8.9, text:'The trips we never went on?',chime:91},
   {at:12.4,text:'The outings we never went on?',chime:93},
   {at:15.9,text:'The flowers I never got to give you, or the flowers you never received?',chime:95},
-  {at:20.6,text:'The gifts I never got to give you?',chime:98},
+  {at:21.0,text:'The gifts I never got to give you?',chime:98},
   {at:44.8,text:'The business we never did?',chime:91},
   {at:48.3,text:'The engagement we never did?',chime:95},
   {at:51.8,text:'Or should we forget meeting your mom?',chime:98},
@@ -243,8 +243,8 @@ function s3_questions(ctx,items,lt,vis){
   }
   ctx.restore();
 }
-const S3_GIFTS=[['bangles.jpg',24.4,28.4],['flowers.jpg',28.4,32.4],['sweets.jpg',32.4,36.4]];
-const S3_LG={photoIn:23.8,photoOut:44.0,art:[36.6,44.0]};  /* the gifts section: 23.8–44.8, the art from 36.6 */
+const S3_GIFTS=[['bangles.jpg',24.8,28.8],['flowers.jpg',28.8,32.8],['sweets.jpg',32.8,36.8]];
+const S3_LG={photoIn:24.2,photoOut:44.0,art:[37.0,44.0]};  /* the gifts section: 24.2–44.8, the art from 37.0 */
 scene({id:'letgo',name:'What should I let go?',when:'2026-09-06T23:47',bars:19,fin:['#000000',1.4],fout:['#000000',1.6],
   note:'on a dark ground: “what should I let go?” — then the questions, one at a time, large in the middle of the frame, the earlier ones climbing up behind in a softer colour. At “the gifts I never got to give you” the gifts themselves: the bangles in their packets, the bouquet of sunflowers and roses, the box of sweets, then the piece of art with their two names hidden in its lines. Back to the questions; the last one held: “What should we forget?”',
   tag:'“What should we forget?”',
@@ -273,13 +273,13 @@ scene({id:'letgo',name:'What should I let go?',when:'2026-09-06T23:47',bars:19,f
     }
   },
   subs:[
-    [0.8,5.0,'And when you said let it go, tell me: what should I let go?'],
-    [5.6,8.6,'The hugs we never did?'],
+    [0.6,5.3,'And when you said let it go, tell me: what should I let go?'],
+    [5.7,8.7,'The hugs we never did?'],
     [9.1,12.1,'The trips we never went on?'],
     [12.6,15.6,'The outings we never went on?'],
-    [16.1,20.3,'The flowers I never got to give you, or the flowers you never received?'],
-    [20.8,23.8,'The gifts I never got to give you?'],
-    [38.0,42.8,'This one has our names hidden in it. In plain English.'],
+    [16.1,20.8,'The flowers I never got to give you, or the flowers you never received?'],
+    [21.2,24.2,'The gifts I never got to give you?'],
+    [38.4,43.2,'This one has our names hidden in it. In plain English.'],
     [45.0,48.0,'The business we never did?'],
     [48.5,51.5,'The engagement we never did?'],
     [52.0,55.4,'Or should we forget meeting your mom?'],

@@ -77,7 +77,7 @@ scene({id:'iba',     when:'2026-02-07T12:00',name:'Dates at IBA',           bars
     motes(ctx,lt,40,82,'#fff6cc',1.4,0.5);
     const hide=0,down=smooth(13,14,lt)*(1-smooth(18.5,19.5,lt)),talk=(lt>13.5&&lt<18);
     ctx.fillStyle='#4a4a52';ctx.fillRect(560,430,160,14);for(let x=566;x<720;x+=30)ctx.fillRect(x,370,10,62);ctx.fillRect(556,362,170,10);
-    drawFabeha(ctx,640,420,1.25,{t:lt,outfit:'uni',hair:'low',pose:'bust',arms:hide>0?'hide':(lt<8?'lap':'cup'),hide,smile:hide>0?1:0.55+0.4*smooth(2,5,lt)-0.25*down,talk,look:down?0:0.12*Math.sin(lt*0.5),tilt:down*0.1+Math.sin(lt*0.4)*0.02,eyes:hide>0?'happy':undefined,blush:0.35+0.45*down+0.4*hide,wind:0.1});
+    drawFabeha(ctx,640,420,1.25,{t:lt,outfit:'sage',hair:'low',pose:'bust',arms:hide>0?'hide':(lt<8?'lap':'cup'),hide,smile:hide>0?1:0.55+0.4*smooth(2,5,lt)-0.25*down,talk,look:down?0:0.12*Math.sin(lt*0.5),tilt:down*0.1+Math.sin(lt*0.4)*0.02,eyes:hide>0?'happy':undefined,blush:0.35+0.45*down+0.4*hide,wind:0.1});
     ctx.fillStyle='#f3b8c6';rrect(ctx,420,572,110,44,8);ctx.fill();ctx.fillStyle='#c76b84';ctx.font='700 13px "Mulish",sans-serif';ctx.textAlign='center';ctx.fillText('crumbl',475,600);
     const slide=smooth(5,7.5,lt),jx=lerp(880,760,slide);ctx.fillStyle='#1f2f4a';rrect(ctx,jx,578,78,44,7);ctx.fill();ctx.fillStyle='#2b3f5e';rrect(ctx,jx,578,78,10,4);ctx.fill();
     ctx.strokeStyle=FB.gold;ctx.lineWidth=2.4;ell(ctx,jx+26,604,13,8,0.2);ctx.stroke();ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(jx+44,590);ctx.quadraticCurveTo(jx+58,600,jx+64,614);ctx.stroke();ctx.fillStyle=FB.gold;circle(ctx,jx+64,616,3.4);ctx.fill();ctx.fillStyle='#fff';circle(ctx,jx+63,615,1.2);ctx.fill();
