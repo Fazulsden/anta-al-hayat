@@ -328,17 +328,31 @@ function s2_handOverEyes(ctx,u){
 }
 function s2_mmss(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
 const S2_AFTER=[
-  {at:25.8,who:'her',time:'00:32',text:'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.'},
-  {at:31.8,who:'her',time:'00:45',text:'Apologies if youre hurt'},
-  {at:35.2,who:'me', time:'00:45',text:'I just cried'},
-  {at:38.6,who:'her',time:'00:45',text:'Look hurting you i would never want that ever'},
-  {at:42.2,who:'her',time:'00:47',text:'You crying bec of me is the last thing i want in my entire life'},
-  {at:47.6,who:'her',time:'00:53',text:'I love you alot to lose you at all'},
+  {at:32.8,who:'her',time:'00:32',text:'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.'},
+  {at:38.8,who:'her',time:'00:45',text:'Apologies if youre hurt'},
+  {at:42.2,who:'me', time:'00:45',text:'I just cried'},
+  {at:45.6,who:'her',time:'00:45',text:'Look hurting you i would never want that ever'},
+  {at:49.2,who:'her',time:'00:47',text:'You crying bec of me is the last thing i want in my entire life'},
+  {at:54.6,who:'her',time:'00:53',text:'I love you alot to lose you at all'},
 ];
-/* the three beats: the house (0–7.4, a dip to black), the call in the dark room (7.4–24.4, fades up from the dip, dips again), the chat after midnight (24.4–end) */
-const S2_SIX={house:7.4,chat:24.4};
-scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:16,fin:['#000000',1.4],fout:['#000000',1.6],
-  note:'Usman’s birthday: the house full, the cake glowing through a doorway, shoes by the door; the dark room he went into, the phone propped, her face small and lit on the video call — laughing, then not; his hand over his eyes; and the chat after midnight.',
+/* the four beats: the house (0–7.4, a dip to black), the call in the dark room (7.4–24.4, fades up from the dip, dips again),
+   the 22 August screen on black (24.4–31.4), the chat after midnight (31.4–end) */
+const S2_SIX={house:7.4,card:24.4,chat:31.4};
+/* the 22 August screen: what she had asked of him, big and centred on black; the second line smaller under it */
+const S2_AUG=['22 August. Don’t comment on dress sense.\nDon’t judge women on clothes.','The very thing she had asked of me. I had memorised it.'];
+function s2_augCard(ctx,a1,a2){
+  if(a1<=0)return;
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font='600 56px "Cormorant Garamond",serif';const lines=wrapText(ctx,S2_AUG[0],1040),lh=68,th=lines.length*lh,cy=296;
+  ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=a1;glow(ctx,640,cy,420,'#ffb27a',0.1);ctx.restore();
+  ctx.globalAlpha=a1;ctx.shadowColor='rgba(255,186,140,.5)';ctx.shadowBlur=22;ctx.fillStyle='#fff4e6';
+  for(let k=0;k<lines.length;k++)ctx.fillText(lines[k],640,cy-th/2+lh/2+k*lh+(1-a1)*12);
+  if(a2>0){ctx.globalAlpha=a2;ctx.font='italic 500 36px "Cormorant Garamond",serif';ctx.shadowBlur=14;ctx.fillStyle='#e9cdb4';
+    const l2=wrapText(ctx,S2_AUG[1],1000);for(let k=0;k<l2.length;k++)ctx.fillText(l2[k],640,cy+th/2+50+k*44+(1-a2)*10);}
+  ctx.restore();
+}
+scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:18,fin:['#000000',1.4],fout:['#000000',1.6],
+  note:'Usman’s birthday: the house full, the cake glowing through a doorway, shoes by the door; the dark room he went into, the phone propped, her face small and lit on the video call — laughing, then not; his hand over his eyes; on black, big, what she had asked of him on 22 August — don’t comment on dress sense, don’t judge women on clothes — and that he had memorised it; and the chat after midnight.',
   tag:'“You do mean a lot to me.”',
   prep(){return{R:rooms(),party:s2_partyLayer(),room:s2_callRoom()};},
   draw(ctx,lt,A){
@@ -354,7 +368,7 @@ scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:16,fin:['#000
       const dk=smooth(6.6,7.4,lt);if(dk>0){ctx.fillStyle=`rgba(0,0,0,${dk.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
       return;
     }
-    if(lt<S2_SIX.chat){
+    if(lt<S2_SIX.card){
       /* the dark room, the phone propped, her face on the call; the same warm pool of light the next scenes keep */
       ctx.drawImage(A.room,0,0);
       const v=0.26+0.06*Math.sin(lt*2.9)+0.04*Math.sin(lt*7.1);
@@ -378,12 +392,19 @@ scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:16,fin:['#000
       if(k>0){ctx.fillStyle=`rgba(0,0,0,${k.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
       return;
     }
+    if(lt<S2_SIX.chat){
+      /* on black: the line she had asked of him on 22 August, big; the second line smaller under it; both leave before the chat */
+      ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+      const out=1-smooth(30.4,31.1,lt);
+      s2_augCard(ctx,smooth(24.6,25.4,lt)*out,smooth(27.6,28.4,lt)*out);
+      return;
+    }
     /* after midnight */
     ctx.fillStyle='#030409';ctx.fillRect(0,0,W,H);
     ctx.save();ctx.globalAlpha=0.45;ctx.drawImage(A.R.night,0,0);ctx.restore();
     const S=drawPhoneHand(ctx,lt,{x:475,y:44,w:300,h:640});
     chatPanel(ctx,S,S2_AFTER,lt,{name:'Fabeha',status:'online'});
-    phoneTop(ctx,S,{time:lt<31.8?'00:32':lt<42.2?'00:45':lt<47.6?'00:47':'00:53'});
+    phoneTop(ctx,S,{time:lt<38.8?'00:32':lt<49.2?'00:45':lt<54.6?'00:47':'00:53'});
     ctx.save();ctx.globalCompositeOperation='screen';glow(ctx,S.x+S.w/2,S.y+S.h*0.75,380,'#7fa6d8',0.14);ctx.restore();
     const fi=1-smooth(S2_SIX.chat,S2_SIX.chat+1.0,lt);if(fi>0){ctx.fillStyle=`rgba(0,0,0,${fi.toFixed(3)})`;ctx.fillRect(0,0,W,H);}
   },
@@ -391,21 +412,24 @@ scene({id:'sixsep',name:'6 September',when:'2026-09-06T23:31',bars:16,fin:['#000
     [0.8,6.5,'6 September. Usman’s birthday. The house was full, and everyone knew which room I had gone to.'],
     [8.6,12.2,'We were laughing. She teased me a little.'],
     [14.0,18.6,'And months of it came up at once. I started crying.'],
-    [26.0,31.6,'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.','her'],
-    [32.0,35.0,'Apologies if youre hurt','her'],
-    [35.4,38.4,'I just cried','him'],
-    [38.8,42.0,'Look hurting you i would never want that ever','her'],
-    [42.4,47.4,'You crying bec of me is the last thing i want in my entire life','her'],
-    [47.8,51.0,'I love you alot to lose you at all','her'],
+    [24.8,27.4,'22 August. Don’t comment on dress sense. Don’t judge women on clothes.'],
+    [27.8,30.6,'The very thing she had asked of me. I had memorised it.'],
+    [33.0,38.6,'Heyyyy\nDidn\'t mean to emotionally attack you or harm you. You do mean a lot to me.','her'],
+    [39.0,42.0,'Apologies if youre hurt','her'],
+    [42.4,45.4,'I just cried','him'],
+    [45.8,49.0,'Look hurting you i would never want that ever','her'],
+    [49.4,54.4,'You crying bec of me is the last thing i want in my entire life','her'],
+    [54.8,58.0,'I love you alot to lose you at all','her'],
   ],
   score({T,add,at,hit,pad,melody,THEME_B,THEME_B_CH}){
-    /* the house: one warm chord; the laughing: a thin pad and three notes; the crying: almost nothing; after midnight: her theme begins on the piano alone, and carries into the next scene */
+    /* the house: one warm chord; the laughing: a thin pad and three notes; the crying: almost nothing; the 22 August screen: one low note and the thinnest Em, almost silence;
+       after midnight: her theme begins on the piano alone, and carries into the next scene */
     pad(T(0),'G',2.2,0.2,'pad');
     pad(T(2,1),'Em7',1.3,0.14,'pad');pad(T(3,2),'Cmaj7',1.2,0.13,'pad');
     [[9.0,76],[10.6,74],[12.4,71]].forEach(([t,m])=>add(at(t),'piano',{midi:m,dur:2.4,vel:0.26}));
     pad(T(4,2),'Em',2.6,0.08,'pad');add(at(16.4),'piano',{midi:52,dur:4,vel:0.2});
-    pad(T(7,2),'Em',0.55,0.12,'pad');
-    for(let b=8;b<16;b++){pad(T(b),THEME_B_CH[b-8],1.05,0.13,'pad');melody(b,b-8,'piano',0,0.3,THEME_B);}
+    pad(T(7,2),'Em',2.2,0.07,'pad');add(at(24.9),'piano',{midi:52,dur:4,vel:0.16});
+    for(let b=10;b<18;b++){pad(T(b),THEME_B_CH[b-10],1.05,0.13,'pad');melody(b,b-10,'piano',0,0.3,THEME_B);}
     for(const m of S2_AFTER)hit(m.at,'tick',{hi:m.who==='her'});
   },
   amb(lt){return lt<S2_SIX.house?{crowd:0.3*(1-smooth(4.8,7.2,lt)),room:0.12}:{room:0.22};},
