@@ -163,7 +163,7 @@ const S3_HONESTY=[
   {at:16.6,until:24.4,text:'I should have been patient. But when you said you are fine, that was the minute I knew something had gone wrong.'},
   {at:24.9,until:37.3,text:'The only khayal I had was your nani. Mein kaise akela chhod sakta tha? How could I have let you suffer, or get hurt? I thought apki nani ki tabiyat aur zyada kharab ho gayi hai.'},
   {at:37.8,until:45.6,text:'You walking on eggshells literally made me feel like someone took out my heart and squeezed it.'},
-  {at:46.1,until:51.5,text:'My second thought was that someone was harassing you.'},
+  {at:46.1,until:51.5,text:'My second thought, out of the thousands, was ke koi aapko pareshan kar raha hai. Hurting you.'},
   {at:52.0,until:61.8,text:'All of this was running in my head. And I was being there for you every three or four days, to reassure you: I am here for you.'},
   {at:63.5,until:70.9,text:'I am not putting any pressure on you about us getting back together. I firmly believe it has to be your decision.'},
   {at:71.4,until:82.5,text:'But chhod ke nahi jaana tha. Hum dono ko saath mein mil ke sab solve karna tha. I became vulnerable because aap ne hi bola tha: that is what partners are for.'},
