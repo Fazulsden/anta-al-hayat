@@ -230,8 +230,8 @@ const J7_NOLONGER=[
   {at:25.2,who:'me', time:'17:01',text:'Ja bhai ja'},
   {at:27.0,who:'her',time:'17:01',text:'Jab meri job lagegi ill give you one'},
 ];
-scene({id:'nolonger',name:'24 July · the last paper',when:'2026-07-24T16:57',bars:10,fin:['#000000',1.2],fout:['#000000',1.4],
-  note:'four minutes to five, 24 July: her last paper at IBA ends; red brick and rain on her side of the frame, a dry Hyderabad afternoon on his, and the phone bursting between them.',
+scene({id:'nolonger',name:'24 July · the last paper',when:'2026-07-24T16:57',bars:11,fin:['#000000',1.2],fout:['#000000',1.4],
+  note:'four minutes to five, 24 July: her last paper at IBA ends; red brick and rain on her side of the frame, a dry Hyderabad afternoon on his, and the phone bursting between them; four years of IBA, and then she was free.',
   tag:'“Im no longer a student😭” · “Mubarakkkk” · “Babyyyyy” · “Januuu”',
   prep(){const r=rng(724),c=mk(W,H),g=c.getContext('2d');
     /* left — IBA in the rain */
@@ -287,13 +287,16 @@ scene({id:'nolonger',name:'24 July · the last paper',when:'2026-07-24T16:57',ba
     [24.3,25.4,'Lolll kahi pe nhi','her'],
     [25.6,26.7,'Ja bhai ja','him'],
     [27.1,29.6,'Jab meri job lagegi ill give you one','her'],
-    [30.0,31.8,'Noted.'],
+    [30.0,31.6,'Noted.'],
+    [32.2,35.8,'Four years of IBA. And then you were free.'],
   ],
   score({hit,bars,melody,THEME}){
     bars(0,3,['G','Cmaj7','Em7'],{strings:true,padVel:0.42});
     bars(3,1,['Dsus'],{strings:true,padVel:0.45});
     bars(4,6,['G','D','Em','Cmaj7','G','D'],{strings:true,padVel:0.5,arp:true,arpVel:0.14,bass:true,bassVel:0.32});
+    bars(10,1,['G'],{strings:true,padVel:0.4});
     for(let b=4;b<8;b++)melody(b,b-4,'flute',0,0.5,THEME);
+    hit(32.2,'chime',{midi:79,vel:0.35});
     hit(9.6,'chime',{midi:83,vel:0.5});hit(13.2,'swell',{dur:0.8,vel:0.35});
     for(const m of J7_NOLONGER)hit(m.at,'tick',{hi:m.who==='her'});
   },

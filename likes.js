@@ -23,6 +23,10 @@
      of all the keychains, the purple one — 47015 (31 Aug)
    From Fazul's own notes (no chat line): she recognises people by their scent, so he built a collection of perfumes
      to smell and rate together (his photograph, photos/scents.jpg); the perfume she gave him, its box and its bag are kept with the crumble box.
+   Added 6 Nov, from his notes: the jhumkas she wears and works on; she loved drawing as a child; her first money was earned through resin,
+     and on 12 Apr she thought of keeping his paper flowers in it ("If I'll start raisin ns phir teekh hsi" / "Usko preserve karsakte hain" / "Resin*" 17222–17226);
+     a keychain of hers broke and her nani fixed it; when she is pissed off the Huda Beauty palette comes out;
+     she measures what she eats, chips included ("Aray aisa nhi khati ussi ko measure karkay khati hun withi calorie limit" / "Mine is around 1500" / "1500-1600" 33457–33460, 9 Jul).
 */
 'use strict';
 
@@ -964,6 +968,244 @@ function lkGolden(g,c){
   for(let i=0;i<90;i++){const u=i/90,x=r()*W,y=470+u*u*240,s=10+u*50;g.strokeStyle='#5a8a3a';g.lineWidth=1+u*3;g.beginPath();g.moveTo(x,y+s);g.lineTo(x,y);g.stroke();g.drawImage(SPR.sunflower,x-s/2,y-s/2,s,s);}
 }
 
+/* ================================================================== IV · added 6 Nov: jhumkas, drawing, resin, nani's keychain · the palette, fifteen hundred ============ */
+function lkVelvet(g,x,y,w,h,col,seed){
+  const r=rng(seed);
+  lkShadow(g,x+24,y+h/2+16,w*0.56,h*0.26,0.5);
+  g.fillStyle=mixHex(col,'#000000',0.45);rrect(g,x-w/2-8,y-h/2+8,w+16,h+4,30);g.fill();
+  g.fillStyle=vgrad(g,y-h/2,y+h/2,[[0,mixHex(col,'#ffffff',0.14)],[0.5,col],[1,mixHex(col,'#000000',0.25)]]);rrect(g,x-w/2,y-h/2,w,h,26);g.fill();
+  g.save();rrect(g,x-w/2,y-h/2,w,h,26);g.clip();
+  for(let k=0;k<6;k++){const fx=x-w/2+(k+0.5)/6*w+(r()-0.5)*40;
+    g.strokeStyle='rgba(255,205,220,.11)';g.lineWidth=16+r()*18;g.beginPath();g.moveTo(fx-50,y-h/2-20);g.bezierCurveTo(fx+30,y-h/4,fx-40,y+h/4,fx+30,y+h/2+20);g.stroke();
+    g.strokeStyle='rgba(25,0,12,.16)';g.lineWidth=8+r()*10;g.beginPath();g.moveTo(fx-24,y-h/2-20);g.bezierCurveTo(fx+56,y-h/4,fx-14,y+h/4,fx+56,y+h/2+20);g.stroke();}
+  for(let k=0;k<70;k++){g.fillStyle='rgba(255,200,215,.05)';ell(g,x-w/2+r()*w,y-h/2+r()*h,18+r()*30,5+r()*8,r()*3);g.fill();}
+  g.restore();
+  lkSoft(g,x-w*0.22,y-h*0.22,w*0.42,h*0.5,'#ffd0dc',0.13);
+}
+/* one jhumka, lying on the cloth: the stud with its stone, three links, the bell-shaped dome in gold filigree, seed pearls at the rim and a fringe of tiny bells */
+function lkJhumka(g,jx,jy,s,rot){
+  g.save();g.translate(jx,jy);g.rotate(rot||0);g.scale(s,s);
+  const G0='#fff1b8',G1='#f2cf6a',G2='#c8963e',G3='#8a5a1a';
+  lkShadow(g,8,120,42,16,0.45);
+  g.strokeStyle=G2;g.lineWidth=2.5;g.beginPath();g.arc(0,-26,12,Math.PI*1.1,Math.PI*2.1);g.stroke();
+  for(let k=0;k<7;k++){const a=k/7*TAU;g.fillStyle=k%2?G1:G2;ell(g,Math.cos(a)*10,Math.sin(a)*10,8,4.5,a);g.fill();}
+  const sg=g.createRadialGradient(-3,-3,1,0,0,8);sg.addColorStop(0,'#e06a86');sg.addColorStop(1,'#6a1020');g.fillStyle=sg;circle(g,0,0,7.5);g.fill();g.fillStyle='rgba(255,255,255,.75)';circle(g,-2.5,-2.5,1.8);g.fill();
+  g.strokeStyle=G1;g.lineWidth=2;for(let k=0;k<3;k++){ell(g,0,16+k*9,3.2,5.2);g.stroke();}
+  const top=40,bot=96,hw=36;
+  const dg=g.createLinearGradient(-hw,0,hw,0);dg.addColorStop(0,G3);dg.addColorStop(0.25,G1);dg.addColorStop(0.45,G0);dg.addColorStop(0.7,G1);dg.addColorStop(1,G3);g.fillStyle=dg;
+  g.beginPath();g.moveTo(0,top-6);g.bezierCurveTo(hw*0.9,top+4,hw,bot-26,hw,bot);g.lineTo(-hw,bot);g.bezierCurveTo(-hw,bot-26,-hw*0.9,top+4,0,top-6);g.closePath();g.fill();
+  g.strokeStyle='rgba(120,70,20,.55)';g.lineWidth=1;for(let row=0;row<4;row++){const yy=top+12+row*13,ww=lerp(hw*0.45,hw*0.95,row/3);for(let k=-4;k<=4;k++){g.beginPath();g.arc(k/4*ww*0.85,yy,3.2,Math.PI,0);g.stroke();}}
+  g.fillStyle='rgba(255,250,220,.9)';for(let row=0;row<3;row++){const yy=top+18+row*13,ww=lerp(hw*0.5,hw*0.9,row/2);for(let k=-4;k<4;k++){circle(g,(k+0.5)/4*ww*0.85,yy,1.1);g.fill();}}
+  g.fillStyle='#7a1a2e';g.fillRect(-hw,bot-10,hw*2,6);g.fillStyle='rgba(255,255,255,.25)';g.fillRect(-hw,bot-10,hw*2,1.5);
+  for(let k=0;k<11;k++){const px=-hw+4+k*(hw*2-8)/10;const pg=g.createRadialGradient(px-1,bot-3.5,0.3,px,bot-3,3.4);pg.addColorStop(0,'#ffffff');pg.addColorStop(1,'#cfd6dc');g.fillStyle=pg;circle(g,px,bot-3,3.2);g.fill();}
+  g.fillStyle=G2;g.fillRect(-hw-2,bot-1,hw*2+4,4);g.fillStyle=G0;g.fillRect(-hw-2,bot-1,hw*2+4,1.2);
+  g.fillStyle='rgba(255,255,255,.35)';ell(g,-hw*0.45,top+26,5,16,0.12);g.fill();
+  for(let k=0;k<9;k++){const px=-hw+4+k*(hw*2-8)/8,len=10+(k%2)*4+Math.abs(4-k)*1.2,by=bot+3+len;
+    g.strokeStyle=G2;g.lineWidth=1.2;g.beginPath();g.moveTo(px,bot+3);g.lineTo(px,by);g.stroke();
+    const bg=g.createLinearGradient(px-5,0,px+5,0);bg.addColorStop(0,G3);bg.addColorStop(0.4,G0);bg.addColorStop(1,G2);g.fillStyle=bg;
+    g.beginPath();g.moveTo(px-2,by);g.bezierCurveTo(px-6,by+3,px-6,by+8,px-6,by+10);g.lineTo(px+6,by+10);g.bezierCurveTo(px+6,by+8,px+6,by+3,px+2,by);g.closePath();g.fill();
+    g.fillStyle=G3;g.fillRect(px-6,by+10,12,1.5);g.fillStyle='#5a3a10';circle(g,px,by+12.5,1.4);g.fill();}
+  g.restore();
+}
+function lkJhumkas(g,c){
+  const x=lkOX(c),r=rng(602);
+  lkVelvet(g,x,490,440,230,'#5a1026',601);
+  lkJhumka(g,x-74,426,1.24,-0.06);lkJhumka(g,x+82,430,1.24,0.07);
+  for(let k=0;k<7;k++){const px=x-180+r()*360,py=562+r()*34;const pg=g.createRadialGradient(px-1,py-1,0.5,px,py,4);pg.addColorStop(0,'#ffffff');pg.addColorStop(1,'#c8d0d8');g.fillStyle=pg;circle(g,px,py,3.4);g.fill();}
+}
+/* a child's sketchbook: spiral at the top, a pencil house with smoke, a sun, a flower with a little pink crayon in the petals; crayons and a short pencil beside it */
+function lkSketchbook(g,c){
+  const x=lkOX(c),r=rng(621);
+  g.save();g.translate(x-20,476);g.rotate(-0.07);
+  lkShadow(g,18,124,220,60,0.5);
+  g.fillStyle='#e6dcc8';g.fillRect(-206,-130,412,266);g.fillStyle='#f8f4ea';g.fillRect(-200,-124,400,254);g.fillStyle='rgba(200,180,140,.12)';for(let k=0;k<8;k++){ell(g,-160+r()*320,-100+r()*210,60+r()*60,20+r()*20,r());g.fill();}
+  for(let k=-9;k<=9;k++){const sx=k*21;g.fillStyle='#3a3a44';circle(g,sx,-114,3.5);g.fill();g.strokeStyle='#8a8f98';g.lineWidth=3;g.beginPath();g.arc(sx,-124,9,Math.PI*0.95,Math.PI*2.05);g.stroke();g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=1;g.beginPath();g.arc(sx,-124,9,Math.PI*1.15,Math.PI*1.6);g.stroke();}
+  const pen='rgba(58,56,66,.78)';g.strokeStyle=pen;g.lineWidth=2.2;g.lineCap='round';g.lineJoin='round';
+  const wob=(pts,close)=>{g.beginPath();pts.forEach(([px,py],i)=>{const jx=px+(r()-0.5)*3,jy=py+(r()-0.5)*3;i?g.lineTo(jx,jy):g.moveTo(jx,jy);});if(close)g.closePath();g.stroke();};
+  const hx=-70,hy=70;
+  wob([[hx-60,hy],[hx+60,hy],[hx+60,hy-70],[hx-60,hy-70]],true);
+  wob([[hx-70,hy-70],[hx,hy-130],[hx+70,hy-70]],false);
+  wob([[hx+28,hy-96],[hx+28,hy-124],[hx+44,hy-124],[hx+44,hy-82]],false);
+  wob([[hx-14,hy],[hx-14,hy-40],[hx+14,hy-40],[hx+14,hy]],false);g.fillStyle=pen;circle(g,hx+8,hy-20,1.8);g.fill();
+  wob([[hx-48,hy-30],[hx-24,hy-30],[hx-24,hy-56],[hx-48,hy-56]],true);wob([[hx-36,hy-30],[hx-36,hy-56]],false);wob([[hx-48,hy-43],[hx-24,hy-43]],false);
+  g.lineWidth=1.6;for(let k=0;k<3;k++){g.beginPath();g.arc(hx+40+k*6,hy-140-k*14,6,Math.PI*0.5,Math.PI*1.9);g.stroke();}
+  g.lineWidth=2.2;const sx=130,sy=-70;circle(g,sx,sy,18);g.stroke();for(let k=0;k<9;k++){const a=k/9*TAU;g.beginPath();g.moveTo(sx+Math.cos(a)*24,sy+Math.sin(a)*24);g.lineTo(sx+Math.cos(a)*(34+(k%2)*5),sy+Math.sin(a)*(34+(k%2)*5));g.stroke();}
+  const fx=100,fy=70;g.lineWidth=2.4;wob([[fx,fy],[fx+2,fy-30],[fx-2,fy-60]],false);
+  g.beginPath();g.moveTo(fx+1,fy-24);g.quadraticCurveTo(fx+14,fy-38,fx+26,fy-28);g.quadraticCurveTo(fx+14,fy-20,fx+1,fy-24);g.stroke();
+  g.beginPath();g.moveTo(fx-1,fy-40);g.quadraticCurveTo(fx-16,fy-50,fx-24,fy-40);g.quadraticCurveTo(fx-14,fy-34,fx-1,fy-40);g.stroke();
+  for(let k=0;k<6;k++){const a=k/6*TAU,px=fx+Math.cos(a)*18,py=fy-78+Math.sin(a)*18;g.fillStyle='rgba(240,140,170,.45)';for(let j=0;j<5;j++){g.save();g.translate(px,py);g.rotate(a+j*0.5);g.fillRect(-9,-2+j*1.5,18,2.2);g.restore();}ell(g,px,py,11,8,a);g.stroke();}
+  g.fillStyle='rgba(250,210,80,.6)';circle(g,fx,fy-78,8);g.fill();circle(g,fx,fy-78,8);g.stroke();
+  g.lineWidth=1.6;for(let k=0;k<18;k++){const gx=-170+k*20+r()*8;g.beginPath();g.moveTo(gx,78);g.lineTo(gx+(r()-0.5)*6,70-r()*8);g.stroke();}
+  g.restore();
+  const cray=(cx,cy,rot,col,len)=>{g.save();g.translate(cx,cy);g.rotate(rot);lkShadow(g,4,8,len*0.55,6,0.4);g.fillStyle=mixHex(col,'#000000',0.1);rrect(g,-len/2,-7,len,14,3);g.fill();g.fillStyle=col;rrect(g,-len/2,-7,len,10,3);g.fill();
+    g.fillStyle='#f4ecd8';g.fillRect(-len/2+10,-7,len-30,14);g.fillStyle='rgba(0,0,0,.12)';g.fillRect(-len/2+10,3,len-30,4);g.fillStyle=col;g.fillRect(-len/2+14,-5,len-38,10);g.fillStyle='rgba(255,255,255,.55)';g.fillRect(-len/2+14,-5,len-38,2);
+    g.fillStyle=col;g.beginPath();g.moveTo(len/2,-7);g.lineTo(len/2+14,0);g.lineTo(len/2,7);g.closePath();g.fill();g.restore();};
+  cray(x+150,574,-0.5,'#d8283a',110);cray(x+206,592,-0.25,'#2f6ab8',110);cray(x-220,584,0.2,'#f4c430',110);cray(x+232,532,-0.9,'#4f9a3a',104);cray(x-262,536,0.45,'#9a5cc8',104);
+  g.save();g.translate(x-150,594);g.rotate(0.1);lkShadow(g,6,8,80,6,0.4);g.fillStyle='#f4c430';g.fillRect(-70,-6,130,12);g.fillStyle='#d8a020';g.fillRect(-70,2,130,4);g.fillStyle='#e9a0a8';rrect(g,-88,-6,20,12,3);g.fill();g.fillStyle='#c9ccd2';g.fillRect(-72,-6,7,12);g.fillStyle='#f2dcb4';g.beginPath();g.moveTo(60,-6);g.lineTo(82,0);g.lineTo(60,6);g.closePath();g.fill();g.fillStyle='#2a2420';g.beginPath();g.moveTo(76,-2);g.lineTo(82,0);g.lineTo(76,2);g.closePath();g.fill();g.restore();
+  g.fillStyle='#e8d2a8';for(let k=0;k<5;k++){g.save();g.translate(x-90+r()*60,612+r()*14);g.rotate(r()*TAU);g.beginPath();g.moveTo(0,0);g.quadraticCurveTo(10,-8,18,0);g.quadraticCurveTo(10,4,0,0);g.fill();g.restore();}
+}
+/* a clear resin block with one of his paper tulips kept inside, a resin heart keychain with gold flakes, her bottle and stirring stick */
+function lkResin(g,c){
+  const x=lkOX(c),r=rng(611);
+  const bx=x-50,by=556,bw=176,bh=128,dp=26;
+  lkShadow(g,bx+bw/2+16,by+8,bw*0.62,18,0.45);lkSoft(g,bx+bw/2-10,by+6,bw*0.5,14,'#bfe4ff',0.5);
+  g.fillStyle='rgba(225,242,250,.55)';g.beginPath();g.moveTo(bx,by-bh);g.lineTo(bx+dp,by-bh-dp*0.6);g.lineTo(bx+bw+dp,by-bh-dp*0.6);g.lineTo(bx+bw,by-bh);g.closePath();g.fill();
+  g.fillStyle='rgba(160,200,225,.5)';g.beginPath();g.moveTo(bx+bw,by-bh);g.lineTo(bx+bw+dp,by-bh-dp*0.6);g.lineTo(bx+bw+dp,by-dp*0.6);g.lineTo(bx+bw,by);g.closePath();g.fill();
+  g.save();g.beginPath();g.rect(bx,by-bh,bw,bh);g.clip();
+  g.fillStyle='rgba(205,230,245,.35)';g.fillRect(bx,by-bh,bw,bh);
+  const fx=bx+bw/2,fy=by-26;g.globalAlpha=0.9;
+  g.strokeStyle='#6a9a58';g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(fx+4,fy);g.quadraticCurveTo(fx-4,fy-30,fx,fy-62);g.stroke();
+  lkLeaf(g,fx-2,fy-24,30,8,-2.4,'#7fb06a');
+  g.save();g.translate(fx,fy-66);g.fillStyle='#c86a86';g.beginPath();g.moveTo(-20,8);g.lineTo(-26,-30);g.lineTo(-8,-16);g.lineTo(0,-40);g.lineTo(8,-16);g.lineTo(26,-30);g.lineTo(20,8);g.closePath();g.fill();g.fillStyle='#e3889f';g.beginPath();g.moveTo(-16,6);g.lineTo(-20,-24);g.lineTo(-6,-12);g.lineTo(0,-34);g.lineTo(6,-12);g.lineTo(20,-24);g.lineTo(16,6);g.closePath();g.fill();g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=1;g.beginPath();g.moveTo(0,-34);g.lineTo(0,4);g.moveTo(-6,-12);g.lineTo(-9,4);g.moveTo(6,-12);g.lineTo(9,4);g.stroke();g.restore();
+  g.globalAlpha=1;
+  g.fillStyle='rgba(255,255,255,.45)';for(let k=0;k<9;k++){circle(g,bx+12+r()*(bw-24),by-bh+12+r()*(bh-24),0.8+r()*1.6);g.fill();}
+  g.restore();
+  g.fillStyle=vgrad(g,by-bh,by,[[0,'rgba(240,250,255,.22)'],[0.5,'rgba(210,235,250,.10)'],[1,'rgba(140,180,210,.28)']]);g.fillRect(bx,by-bh,bw,bh);
+  g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=2;g.strokeRect(bx,by-bh,bw,bh);g.strokeStyle='rgba(255,255,255,.45)';g.beginPath();g.moveTo(bx,by-bh);g.lineTo(bx+dp,by-bh-dp*0.6);g.lineTo(bx+bw+dp,by-bh-dp*0.6);g.lineTo(bx+bw+dp,by-dp*0.6);g.lineTo(bx+bw,by);g.stroke();
+  g.fillStyle='rgba(255,255,255,.55)';g.beginPath();g.moveTo(bx+10,by-bh+6);g.lineTo(bx+40,by-bh+6);g.lineTo(bx+22,by-30);g.lineTo(bx+10,by-30);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.22)';g.fillRect(bx+bw-16,by-bh+14,5,bh-30);
+  const kx=x+190,ky=572;lkShadow(g,kx+6,ky+28,44,10,0.4);
+  g.strokeStyle='#c9ccd2';g.lineWidth=4;circle(g,kx+6,ky-62,15);g.stroke();g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=1.2;g.beginPath();g.arc(kx+6,ky-62,15,Math.PI*1.1,Math.PI*1.7);g.stroke();
+  g.strokeStyle='#b8bcc4';g.lineWidth=2.4;for(let k=0;k<3;k++){ell(g,kx+6,ky-40+k*10,3,4.8,k%2?0.5:-0.5);g.stroke();}
+  g.fillStyle='rgba(120,60,180,.55)';heart(g,kx,ky,30);g.fill();g.fillStyle='rgba(170,110,230,.35)';heart(g,kx-2,ky-3,24);g.fill();
+  g.save();heart(g,kx,ky,30);g.clip();g.fillStyle='#f2cf6a';for(let k=0;k<22;k++){g.save();g.translate(kx-26+r()*52,ky-26+r()*48);g.rotate(r()*TAU);g.fillRect(-2.5,-1,5,2);g.restore();}g.restore();
+  g.strokeStyle='rgba(255,255,255,.65)';g.lineWidth=1.5;heart(g,kx,ky,30);g.stroke();g.fillStyle='rgba(255,255,255,.55)';ell(g,kx-11,ky-12,6,3.5,-0.6);g.fill();
+  const px=x-200,py=520;lkShadow(g,px+10,py+4,34,8,0.4);g.fillStyle='rgba(235,245,250,.6)';rrect(g,px-22,py-96,44,96,8);g.fill();g.fillStyle='rgba(200,225,240,.5)';rrect(g,px-18,py-60,36,56,6);g.fill();g.fillStyle='#2a2a32';rrect(g,px-14,py-112,28,20,4);g.fill();g.fillStyle='rgba(255,255,255,.55)';rrect(g,px-16,py-88,5,70,3);g.fill();
+  g.save();g.translate(px+60,py-10);g.rotate(-0.9);g.fillStyle='#d8b888';rrect(g,-4,-70,8,110,4);g.fill();g.restore();
+  for(let k=0;k<4;k++){g.fillStyle=k%2?'#d98aa0':'#c86a86';ell(g,x-110+r()*300,598+r()*20,9,5,r()*3);g.fill();}
+}
+/* nani's table: her reading glasses folded, a spool of thread; her hands and the keychain are painted live */
+const NANI={skin:'#e6bf9f',sh:'#c99a78',nail:'#f3d7c6',line:'rgba(150,90,60,.32)',sleeve:'#b7a1cf',cuff:'#eee6f5'};
+function lkNaniTable(g,c){
+  const x=lkOX(c);
+  const gx=x-230,gy=470;lkShadow(g,gx+10,gy+12,80,10,0.4);
+  g.strokeStyle='#5a3a28';g.lineWidth=3;for(const dx of[-28,28]){g.fillStyle='rgba(200,225,240,.35)';ell(g,gx+dx,gy,26,16);g.fill();ell(g,gx+dx,gy,26,16);g.stroke();g.fillStyle='rgba(255,255,255,.35)';ell(g,gx+dx-8,gy-5,8,3,-0.5);g.fill();}
+  g.beginPath();g.moveTo(gx-2,gy-4);g.quadraticCurveTo(gx,gy-10,gx+2,gy-4);g.stroke();g.beginPath();g.moveTo(gx+54,gy-2);g.lineTo(gx+110,gy-14);g.moveTo(gx-54,gy-2);g.lineTo(gx-110,gy-14);g.stroke();
+  const sx=x+230,sy=510;lkShadow(g,sx+8,sy+16,30,8,0.4);g.fillStyle='#d8b888';ell(g,sx,sy+12,22,8);g.fill();g.fillStyle='#8a4ac8';g.fillRect(sx-18,sy-26,36,38);for(let k=0;k<9;k++){g.fillStyle=k%2?'#9a5cd8':'#7a3ab8';g.fillRect(sx-18,sy-26+k*4.2,36,2.2);}g.fillStyle='#d8b888';ell(g,sx,sy-26,22,8);g.fill();g.fillStyle='#e8d0a8';ell(g,sx,sy-26,12,4);g.fill();g.strokeStyle='#8a4ac8';g.lineWidth=1.5;g.beginPath();g.moveTo(sx+18,sy);g.quadraticCurveTo(sx+60,sy+20,sx+90,sy+10);g.stroke();
+}
+/* an older hand, seen from the back: fingers point along -y; mir=-1 for the left hand */
+function lkNaniHand(ctx,px,py,rot,mir,o){
+  ctx.save();ctx.translate(px,py);ctx.rotate(rot);ctx.scale(mir,1);
+  ctx.fillStyle=NANI.sh;ell(ctx,3,10,38,48);ctx.fill();
+  ctx.fillStyle=NANI.skin;ell(ctx,0,0,38,48);ctx.fill();
+  if(o.grip)o.grip(ctx);
+  const th=o.thumb||[-40,-8,-0.12,70];
+  ctx.save();ctx.translate(th[0],th[1]);ctx.rotate(th[2]);ctx.fillStyle=NANI.skin;rrect(ctx,-8.5,-th[3],17,th[3]+14,8.5);ctx.fill();ctx.strokeStyle=NANI.line;ctx.lineWidth=1.2;rrect(ctx,-8.5,-th[3],17,th[3]+14,8.5);ctx.stroke();ctx.fillStyle=NANI.nail;ell(ctx,0,-th[3]+7,4.8,6.2);ctx.fill();ctx.strokeStyle=NANI.line;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-5,-th[3]*0.5);ctx.quadraticCurveTo(0,-th[3]*0.5+3,5,-th[3]*0.5);ctx.stroke();ctx.restore();
+  const F=o.fingers||[[-27,70],[-9,46],[9,42],[27,34]];
+  F.forEach(([fx,len],k)=>{ctx.fillStyle=NANI.skin;rrect(ctx,fx-7.5,-30-len,15,len+36,7.5);ctx.fill();ctx.strokeStyle=NANI.line;ctx.lineWidth=1.2;rrect(ctx,fx-7.5,-30-len,15,len+36,7.5);ctx.stroke();
+    ctx.fillStyle=NANI.nail;ell(ctx,fx,-26-len,4.8,6.2);ctx.fill();
+    ctx.strokeStyle=NANI.line;ctx.lineWidth=1;for(const t of[0.42,0.74]){const ky=-30-len*t;ctx.beginPath();ctx.moveTo(fx-5,ky);ctx.quadraticCurveTo(fx,ky+2.5,fx+5,ky);ctx.stroke();ctx.beginPath();ctx.moveTo(fx-4,ky+4);ctx.quadraticCurveTo(fx,ky+6,fx+4,ky+4);ctx.stroke();}
+    if(k===2&&o.ring){ctx.fillStyle='#e8c46a';rrect(ctx,fx-8.5,-30-len*0.28,17,6,2);ctx.fill();ctx.fillStyle='#fff6d0';ctx.fillRect(fx-6,-29-len*0.28,6,1.5);}});
+  ctx.strokeStyle='rgba(140,85,60,.2)';ctx.lineWidth=1.6;for(const[ax,ay,bx,by]of[[-22,-8,-10,30],[-6,-12,2,34],[10,-10,16,30]]){ctx.beginPath();ctx.moveTo(ax,ay);ctx.quadraticCurveTo((ax+bx)/2-5,(ay+by)/2,bx,by);ctx.stroke();}
+  ctx.strokeStyle=NANI.line;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(-28,-24);ctx.quadraticCurveTo(0,-31,28,-24);ctx.stroke();
+  ctx.restore();
+}
+/* small pliers, in the local frame of the hand that holds them: red grips through the fist, the jaws out past the fingers */
+function lkPliers(ctx){
+  ctx.fillStyle='#b8202a';rrect(ctx,-15,-62,11,134,5);ctx.fill();rrect(ctx,4,-62,11,134,5);ctx.fill();ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(-13,-58,3,120);ctx.fillRect(6,-58,3,120);
+  ctx.fillStyle='#8a8f98';ctx.beginPath();ctx.moveTo(-10,-62);ctx.lineTo(-4,-86);ctx.lineTo(4,-86);ctx.lineTo(10,-62);ctx.closePath();ctx.fill();
+  const jaw=s=>{ctx.fillStyle='#b9bec6';ctx.beginPath();ctx.moveTo(s*1,-84);ctx.lineTo(s*7,-96);ctx.lineTo(s*2.5,-126);ctx.lineTo(s*0.6,-126);ctx.lineTo(s*0.6,-90);ctx.closePath();ctx.fill();ctx.strokeStyle='rgba(60,60,70,.5)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(s*6,-98);ctx.lineTo(s*2,-124);ctx.stroke();};
+  jaw(-1);jaw(1);
+  ctx.fillStyle='#c9ccd2';circle(ctx,0,-84,7);ctx.fill();ctx.fillStyle='#5a5f68';circle(ctx,0,-84,2.5);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.fillRect(-5,-120,1.6,22);
+}
+function lkNaniHands(ctx,lt,x){
+  const bob=Math.sin(lt*0.7)*2.5,work=Math.sin(lt*2.6)*0.025;
+  ctx.save();ctx.translate(0,bob-34);ctx.translate(x,600);ctx.scale(1.22,1.22);ctx.translate(-x,-600);   /* a little closer, and clear of the subtitle band */
+  /* the keychain between her hands: the ring, the chain with its opened link, the little enamel flower */
+  const rx=x-30,ry=512;lkShadow(ctx,rx+30,ry+44,80,10,0.35);
+  ctx.strokeStyle='#8a8f98';ctx.lineWidth=5;circle(ctx,rx,ry+2,20);ctx.stroke();ctx.strokeStyle='#d9dde2';ctx.lineWidth=4;circle(ctx,rx,ry,20);ctx.stroke();ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(rx,ry,20,Math.PI*1.1,Math.PI*1.6);ctx.stroke();
+  ctx.strokeStyle='#b8bcc4';ctx.lineWidth=2.6;[[x-2,516,0.5],[x+10,522,-0.9],[x+22,530,0.5],[x+32,540,-0.9]].forEach(([lx,ly,rot])=>{ell(ctx,lx,ly,3.2,5.4,rot);ctx.stroke();});
+  const cx=x+42,cy=560;lkShadow(ctx,cx+4,cy+14,20,5,0.4);for(let k=0;k<6;k++){const a=k/6*TAU;ctx.fillStyle=k%2?'#9a5cc8':'#b07ad8';ell(ctx,cx+Math.cos(a)*9,cy+Math.sin(a)*9,7,4.5,a);ctx.fill();}ctx.fillStyle='#e8c46a';circle(ctx,cx,cy,5);ctx.fill();ctx.fillStyle='rgba(255,255,255,.7)';circle(ctx,cx-1.5,cy-1.5,1.6);ctx.fill();
+  /* her forearms, in the sleeves of her kameez, a cuff, a thin gold bangle */
+  const arm=(x0,y0,x1,y1,bangle)=>{const L=(t)=>[lerp(x0,x1,t),lerp(y0,y1,t)];
+    ctx.lineCap='round';ctx.strokeStyle=NANI.sleeve;ctx.lineWidth=88;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(...L(0.52));ctx.stroke();
+    ctx.strokeStyle='rgba(60,30,80,.16)';ctx.lineWidth=30;ctx.beginPath();ctx.moveTo(x0+24,y0);ctx.lineTo(L(0.5)[0]+24,L(0.5)[1]);ctx.stroke();
+    ctx.lineCap='butt';ctx.strokeStyle=NANI.cuff;ctx.lineWidth=90;ctx.beginPath();ctx.moveTo(...L(0.5));ctx.lineTo(...L(0.56));ctx.stroke();
+    ctx.lineCap='round';ctx.strokeStyle=NANI.skin;ctx.lineWidth=58;ctx.beginPath();ctx.moveTo(...L(0.56));ctx.lineTo(x1,y1);ctx.stroke();ctx.strokeStyle='rgba(150,90,60,.16)';ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(L(0.6)[0]+14,L(0.6)[1]);ctx.lineTo(x1+14,y1);ctx.stroke();
+    if(bangle){ctx.lineCap='butt';ctx.strokeStyle='#e8c46a';ctx.lineWidth=62;ctx.beginPath();ctx.moveTo(...L(0.84));ctx.lineTo(...L(0.865));ctx.stroke();ctx.strokeStyle='#fff6d0';ctx.lineWidth=62;ctx.beginPath();ctx.moveTo(...L(0.845));ctx.lineTo(...L(0.85));ctx.stroke();}};
+  arm(x-290,790,x-146,632,true);arm(x+290,790,x+160,634,false);
+  /* her right hand holds the little pliers, closing the link; her left hand pinches the ring */
+  lkNaniHand(ctx,x+120,600,-0.93+work,1,{fingers:[[-27,40],[-9,40],[9,38],[27,32]],thumb:[-40,-6,0.55,58],grip:lkPliers});
+  lkNaniHand(ctx,x-125,585,0.47,-1,{fingers:[[-27,70],[-9,48],[9,42],[27,34]],thumb:[-40,-8,-0.12,70],ring:true});
+  ctx.restore();
+}
+/* the eyeshadow palette, open: the lid with its mirror standing behind, three rows of warm neutrals, a blending brush in front */
+function lkHudaPans(x){
+  const px=x-20,BL=[px-186,422],BR=[px+186,422],FL=[px-214,534],FR=[px+214,534],P=(u,v)=>[lerp(lerp(BL[0],BR[0],u),lerp(FL[0],FR[0],u),v),lerp(lerp(BL[1],BR[1],u),lerp(FL[1],FR[1],u),v)];
+  const COL=[['#f1dcc6',0],['#e8c4a6',0],['#d9a584',0],['#c88e6c',0],['#b5714f',0],['#9c5638',0],
+             ['#e6c48e',1],['#d49a62',1],['#b07552',1],['#95563f',0],['#74433a',0],['#54322e',0],
+             ['#e0aea4',0],['#c48c92',0],['#a56a7c',1],['#8a5a5c',0],['#67414a',0],['#3a2a30',1]];
+  return COL.map(([col,sh],i)=>{const row=(i/6|0),[cx,cy]=P((i%6+0.5)/6,(row+0.5)/3);return{cx,cy,col,sh,s:lerp(0.86,1.08,(row+0.5)/3)};});
+}
+function lkHuda(g,c){
+  const x=lkOX(c),r=rng(641),px=x-20;
+  const lw=372,lh=176,ly=412;
+  lkShadow(g,px+16,ly+6,lw*0.5,16,0.45);
+  g.fillStyle=vgrad(g,ly-lh,ly,[[0,'#2c161c'],[1,'#180c10']]);rrect(g,px-lw/2,ly-lh,lw,lh,14);g.fill();
+  g.fillStyle=vgrad(g,ly-lh+14,ly-14,[[0,'#5c4a56'],[0.35,'#bcaeb6'],[0.55,'#8d7c88'],[1,'#3e2e38']]);rrect(g,px-lw/2+16,ly-lh+14,lw-32,lh-28,8);g.fill();
+  g.save();rrect(g,px-lw/2+16,ly-lh+14,lw-32,lh-28,8);g.clip();
+  lkSoft(g,px-40,ly-lh*0.5,150,60,'#ffd8b4',0.5);
+  ['#d9a584','#b5714f','#e6c48e','#a56a7c','#74433a','#c48c92'].forEach((col,k)=>lkSoft(g,px-130+k*52,ly-30,24,10,col,0.5));
+  g.fillStyle='rgba(255,255,255,.16)';g.beginPath();g.moveTo(px-lw/2+28,ly-lh+16);g.lineTo(px-lw/2+118,ly-lh+16);g.lineTo(px-lw/2+56,ly-16);g.lineTo(px-lw/2+28,ly-16);g.closePath();g.fill();
+  g.restore();
+  g.strokeStyle='rgba(255,255,255,.12)';g.lineWidth=1.5;rrect(g,px-lw/2+16,ly-lh+14,lw-32,lh-28,8);g.stroke();
+  const BL=[px-186,422],BR=[px+186,422],FL=[px-214,534],FR=[px+214,534];
+  lkShadow(g,px+30,572,260,40,0.55);
+  g.fillStyle='#1c0e12';g.beginPath();g.moveTo(...BL);g.lineTo(...BR);g.lineTo(...FR);g.lineTo(...FL);g.closePath();g.fill();
+  g.fillStyle=vgrad(g,422,534,[[0,'#2a1820'],[1,'#1a0c10']]);g.beginPath();g.moveTo(BL[0]+6,BL[1]+4);g.lineTo(BR[0]-6,BR[1]+4);g.lineTo(FR[0]-8,FR[1]-6);g.lineTo(FL[0]+8,FL[1]-6);g.closePath();g.fill();
+  const pans=lkHudaPans(x);
+  for(const{cx,cy,col,sh,s}of pans){const rx=25*s,ry=15*s;
+    g.fillStyle='#0c0608';ell(g,cx,cy+1,rx+2,ry+2);g.fill();
+    const gr=g.createRadialGradient(cx-rx*0.3,cy-ry*0.4,1,cx,cy,rx);gr.addColorStop(0,mixHex(col,'#ffffff',sh?0.4:0.18));gr.addColorStop(0.75,col);gr.addColorStop(1,mixHex(col,'#000000',0.3));g.fillStyle=gr;ell(g,cx,cy,rx,ry);g.fill();
+    if(sh){g.fillStyle='rgba(255,250,235,.8)';for(let k=0;k<16;k++){const a=r()*TAU,rr=Math.sqrt(r());g.fillRect(cx+Math.cos(a)*rx*0.9*rr,cy+Math.sin(a)*ry*0.9*rr,1.2,1.2);}}}
+  for(const i of[2,7,10,13]){const{cx,cy,col,s}=pans[i];g.fillStyle=mixHex(col,'#000000',0.22);ell(g,cx+3*s,cy+2*s,11*s,6*s,0.3);g.fill();g.fillStyle='rgba(255,255,255,.1)';ell(g,cx-2*s,cy-2*s,8*s,3*s,0.3);g.fill();}
+  g.fillStyle=vgrad(g,534,564,[[0,'#2a141a'],[1,'#120608']]);g.beginPath();g.moveTo(...FL);g.lineTo(...FR);g.lineTo(FR[0]-4,564);g.lineTo(FL[0]+4,564);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.14)';g.fillRect(FL[0],533,FR[0]-FL[0],2);
+  g.fillStyle='#d9b06a';g.font='700 13px "Mulish",sans-serif';g.textAlign='center';setLS(g,'5px');g.fillText('HUDA',px+2,554);setLS(g,'0px');
+  g.save();g.translate(px-120,586);g.rotate(-0.22);lkShadow(g,10,12,150,8,0.45);
+  g.fillStyle=vgrad(g,-8,8,[[0,'#3a3038'],[0.4,'#120c10'],[1,'#000000']]);g.beginPath();g.moveTo(-170,-5);g.lineTo(-10,-8);g.lineTo(-10,8);g.lineTo(-170,5);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.18)';g.fillRect(-166,-4,150,2);
+  g.fillStyle=vgrad(g,-9,9,[[0,'#f4f1ea'],[0.5,'#9aa0aa'],[1,'#5a606a']]);rrect(g,-14,-9,58,18,4);g.fill();g.fillStyle='rgba(0,0,0,.2)';g.fillRect(-14,-9,3,18);g.fillRect(40,-9,3,18);
+  const bg=g.createLinearGradient(40,0,120,0);bg.addColorStop(0,'#e8dcc6');bg.addColorStop(0.55,'#d9c2a4');bg.addColorStop(1,'#a06c4e');g.fillStyle=bg;g.beginPath();g.moveTo(42,-9);g.quadraticCurveTo(90,-20,120,-2);g.quadraticCurveTo(122,0,120,2);g.quadraticCurveTo(90,20,42,9);g.closePath();g.fill();
+  g.strokeStyle='rgba(120,80,50,.3)';g.lineWidth=1;for(let k=-3;k<=3;k++){g.beginPath();g.moveTo(44,k*2.4);g.quadraticCurveTo(90,k*4.2-1,116,k*1.6);g.stroke();}
+  g.restore();
+  g.fillStyle='rgba(176,117,82,.35)';for(let k=0;k<14;k++){circle(g,px-230+r()*120,566+r()*30,0.8+r()*1.6);g.fill();}
+}
+/* a slim kitchen scale with a few chips on it, her notebook with the limit written at the top, a pen */
+function lkScale(g,c){
+  const x=lkOX(c),r=rng(651);
+  g.save();g.translate(x-180,460);g.rotate(-0.1);
+  lkShadow(g,14,60,170,40,0.4);
+  g.fillStyle='#d9cfbd';rrect(g,-156,-96,312,196,6);g.fill();
+  g.fillStyle='#fbf8f0';g.fillRect(-150,-90,148,184);g.fillStyle='#f4efe3';g.fillRect(2,-90,148,184);g.fillStyle='rgba(0,0,0,.12)';g.fillRect(-4,-90,8,184);
+  g.strokeStyle='rgba(120,140,190,.25)';g.lineWidth=1;for(let k=0;k<8;k++){g.beginPath();g.moveTo(-140,-60+k*20);g.lineTo(-10,-60+k*20);g.moveTo(10,-60+k*20);g.lineTo(140,-60+k*20);g.stroke();}
+  g.fillStyle='rgba(40,50,120,.85)';g.font='italic 600 22px "Cormorant Garamond",serif';g.textAlign='left';g.fillText('1500 – 1600',-134,-66);
+  g.strokeStyle='rgba(40,50,120,.75)';g.lineWidth=1.6;g.beginPath();g.ellipse(-76,-72,66,16,-0.03,0,TAU);g.stroke();
+  const squig=(x0,y0,len)=>{g.beginPath();let px=x0;g.moveTo(px,y0);while(px<x0+len){const w=7+r()*10;g.bezierCurveTo(px+w*0.3,y0-5-r()*5,px+w*0.7,y0+5,px+w,y0-1+r()*2);px+=w;if(r()<0.15)px+=6;g.moveTo(px,y0);}g.stroke();};
+  g.lineWidth=1.3;g.font='italic 500 15px "Cormorant Garamond",serif';for(let k=0;k<6;k++){squig(-134,-40+k*20,60+r()*20);g.fillText(String(80+((k*137)%320)),-44,-36+k*20);}
+  for(let k=0;k<5;k++)squig(14,-60+k*20,80+r()*30);
+  g.restore();
+  g.save();g.translate(x-250,590);g.rotate(-0.35);lkShadow(g,6,8,80,6,0.4);g.fillStyle='#2a2e5a';rrect(g,-80,-6,150,12,6);g.fill();g.fillStyle='#c9ccd2';g.fillRect(-20,-6,6,12);g.beginPath();g.moveTo(70,-5);g.lineTo(90,0);g.lineTo(70,5);g.closePath();g.fill();g.restore();
+  const sx=x+90,sy=560,sw=260,sh=104;
+  lkShadow(g,sx+20,sy+30,sw*0.55,30,0.5);
+  g.fillStyle='#7a7e86';rrect(g,sx-sw/2,sy-sh/2+8,sw,sh+8,22);g.fill();
+  g.fillStyle=vgrad(g,sy-sh/2,sy+sh/2,[[0,'#fbfaf7'],[1,'#dcd9d2']]);rrect(g,sx-sw/2,sy-sh/2,sw,sh,22);g.fill();
+  g.strokeStyle='rgba(0,0,0,.08)';g.lineWidth=1.5;rrect(g,sx-sw/2+12,sy-sh/2+10,sw-24,sh-44,14);g.stroke();
+  lkSoft(g,sx-60,sy-26,110,26,'#ffffff',0.6);
+  g.fillStyle='#3a3f3a';rrect(g,sx-50,sy+sh/2-30,100,22,5);g.fill();g.fillStyle='#b9c8a8';rrect(g,sx-47,sy+sh/2-27,94,16,4);g.fill();
+  g.fillStyle='#1a2418';g.font='700 15px "Mulish",sans-serif';g.textAlign='right';g.fillText('28 g',sx+40,sy+sh/2-14);
+  for(const dx of[-96,96]){g.fillStyle='#8a8f98';circle(g,sx+dx,sy+sh/2-19,6);g.fill();g.fillStyle='rgba(255,255,255,.4)';circle(g,sx+dx-1.5,sy+sh/2-20.5,2);g.fill();}
+  const chip=(cx,cy,rot,s)=>{g.save();g.translate(cx,cy);g.rotate(rot);g.scale(s,s);lkShadow(g,4,8,30,10,0.35);
+    const gr=g.createRadialGradient(-8,-6,2,0,0,32);gr.addColorStop(0,'#fbe6a0');gr.addColorStop(0.7,'#f0c860');gr.addColorStop(1,'#d9a03a');g.fillStyle=gr;
+    g.beginPath();for(let k=0;k<=24;k++){const a=k/24*TAU,w=1+0.07*Math.sin(k*2.6);g.lineTo(Math.cos(a)*30*w,Math.sin(a)*18*w);}g.closePath();g.fill();
+    g.strokeStyle='rgba(190,120,40,.35)';g.lineWidth=1.2;g.beginPath();g.ellipse(0,0,30,18,0,Math.PI*1.05,Math.PI*1.95);g.stroke();
+    g.fillStyle='rgba(255,255,255,.45)';ell(g,-10,-7,10,3.5,-0.3);g.fill();g.fillStyle='rgba(170,100,30,.45)';for(let k=0;k<7;k++){circle(g,-20+r()*40,-10+r()*20,1.1);g.fill();}
+    g.fillStyle='rgba(120,70,20,.25)';ell(g,0,10,22,3);g.fill();g.restore();};
+  chip(sx-40,sy-24,0.2,1);chip(sx+10,sy-32,-0.5,0.95);chip(sx-10,sy-12,0.9,0.9);chip(sx+40,sy-16,-0.15,1);chip(sx-60,sy-4,-0.6,0.85);chip(sx+20,sy-6,0.4,0.8);
+  chip(sx+168,sy+14,0.7,0.85);
+}
+
 /* ================================================================== the three scenes ============ */
 const LK_AMB_ROOM={room:0.22};
 likesScene({id:'likes1',name:'What she loves · sweet things',when:'2026-08-21T19:01',
@@ -1011,7 +1253,7 @@ likesScene({id:'likes1',name:'What she loves · sweet things',when:'2026-08-21T1
 function bokeh0(g){const r=rng(19);for(let i=0;i<40;i++){const x=r()*W,y=40+r()*260,R=6+r()*16;lkSoft(g,x,y,R,R,['#ffd27a','#ffb37a','#fff2d0'][i%3],0.6);}g.strokeStyle='rgba(40,20,10,.5)';g.lineWidth=1;g.beginPath();for(let x=0;x<=W;x+=40)g.lineTo(x,60+Math.sin(x*0.006)*30);g.stroke();}
 
 likesScene({id:'likes2',name:'What she loves · the things she loves',when:'2026-08-21T19:02',
-  note:'purple, gold, maroon and pink with bangles, rings, a small bag and a soft perfume; his photograph of the scents he collected for her; the gym at 6:30; a concert with her in the front row; the sea; rain over Islamabad and the Margallas; the aurora, her dream trip; sudoku, Scrabble, badminton; chess, only in person; one day a rabbit; From, Mirzapur, Bridgerton and books; Black–Scholes and crop futures on a chalkboard; her pocket money for orphan kids’ schooling.',
+  note:'purple, gold, maroon and pink with bangles, rings, a small bag and a soft perfume; his photograph of the scents he collected for her; a pair of gold jhumkas on velvet; the gym at 6:30; a concert with her in the front row; the sea; rain over Islamabad and the Margallas; the aurora, her dream trip; sudoku, Scrabble, badminton; chess, only in person; one day a rabbit; Spirited Away; Black–Scholes and crop futures on a chalkboard; her childhood sketchbook; a paper tulip kept in resin; her pocket money for orphan kids’ schooling; the keychain her nani fixed (her hands, the pliers).',
   tag:'“It\'s purple , gold , maroon”',
   cards:[
     {d:1.5,side:'L',eye:'her colours',line:'Purple, gold, maroon. And pink.',bs:54,small:'Bangles, rings, small cute bags.',q:[{who:'her',text:'It\'s purple , gold , maroon',tag:'25 January'}],
@@ -1022,6 +1264,10 @@ likesScene({id:'likes2',name:'What she loves · the things she loves',when:'2026
       n:['She recognises people by their scent. So I made a whole collection of them, because of her.','So that we could both smell them, and rate them, together.'],
       bg:g=>{g.fillStyle=vgrad(g,0,H,[[0,'#1a1322'],[0.6,'#2c1c30'],[1,'#3a2434']]);g.fillRect(0,0,W,H);lkBlots(g,61,16,['#5a3050','#2a1a30','#7a4a60'],0,H,80,240,0.14);lkSoft(g,926,385,560,440,'#ffd3a0',0.22);},blur:0,scrim:0.42,oy:385,
       live:(ctx)=>lkPhoto(ctx,lkImg('scents.jpg'),612,150,628,471,14)},
+    {d:2.5,side:'L',eye:'jhumkas',line:'The jhumkas you wear.',small:'You love them, and you work on them, so much.',
+      n:['One thing I noticed myself: the jhumkas you wear.','You love them so much, you work on them so much.'],
+      bg:g=>lkRoom(g,{wall:['#efd6c4','#d1a08c'],top:['#8a4a3a','#3e1c14'],ty:360,win:{x:130,y:40,w:300,h:240},light:'#ffe9cc',pool:[380,500,380],seed:61}),obj:lkJhumkas,oy:490,
+      live:(ctx,lt)=>lkTwinkle(ctx,lt,[[310,430,0.1],[458,434,0.5],[290,470,0.8],[480,500,0.3],[352,586,0.65],[430,556,0.95]],'#fff2c8',2)},
     {d:1,side:'R',eye:'almost every day',line:'The gym.',small:'Leg day is not negotiable.',q:[{who:'her',text:'Gym jana hai so no sona 😜',tag:'30 January, 4:42 am'}],qa:0.7,
       n:'The gym, almost every day. She skips sleep, not leg day.',
       bg:lkGym,blur:3,obj:lkGymProps,dy:-46,oy:500,amb:{room:0.25}},
@@ -1052,20 +1298,32 @@ likesScene({id:'likes2',name:'What she loves · the things she loves',when:'2026
     {d:1.5,side:'L',eye:'maths, for fun',line:'Quant finance. Black–Scholes.',bs:52,small:'Epidemiology. A trading bot for crop futures.',q:[{who:'her',text:'Ours target is futures over crops',tag:'15 May'}],
       tx:826,tw:400,n:['And maths. Quant finance, Black–Scholes, epidemiology.','Her idea: a trading bot for crop futures.'],
       bg:lkChalk,blur:0,scrim:0.5,oy:300},
+    {d:2,side:'R',eye:'as a child',line:'You loved to draw.',small:'I think the way you look at things comes from there.',
+      n:'As a child, you loved to draw. I think the way you look at things comes from there.',
+      bg:g=>lkRoom(g,{wall:['#f4e4cc','#dcb88e'],top:['#c9a070','#7a5030'],ty:340,lamp:[1110,90,420],light:'#fff0cc',pool:[900,520,380],seed:62}),obj:lkSketchbook,oy:480},
+    {d:2.5,side:'L',eye:'resin',line:'The first money you ever earned.',small:'And where my paper flowers would live, forever.',
+      n:['Resin. The first money you ever earned, you earned through it.','And when I gave you paper flowers, you thought of keeping them in it, forever.'],
+      bg:g=>lkRoom(g,{wall:['#e4dccc','#bfae94'],top:['#b89a74','#6a4e30'],ty:400,win:{x:120,y:40,w:320,h:250,sky:['#dfeefa','#fff4dc']},light:'#f4f8ff',pool:[380,540,380],seed:63}),obj:lkResin,oy:520,
+      live:(ctx,lt)=>lkTwinkle(ctx,lt,[[348,436,0.2],[440,470,0.7],[556,548,0.45]],'#ffffff',1.6)},
     {d:1.5,side:'R',eye:'quietly',line:'Her pocket money goes to orphan kids.',bs:50,q:[{who:'her',text:'Like i lit work for these orphan kids',tag:'23 January'},{who:'her',text:'By supporting them in education',tag:'23 January'}],
       n:['And her pocket money goes to orphan kids, for their schooling.','That went on my list too.'],
       bg:g=>lkRoom(g,{wall:['#f2e2c4','#d6b689'],top:['#9a6a3e','#523218'],ty:470,win:{x:900,y:40,w:300,h:260},light:'#fff2d0',pool:[900,560,380],seed:23}),obj:lkSchool,oy:520},
+    {d:2.5,side:'L',eye:'the keychain',line:'It broke. Your nani fixed it.',small:'The things she fixes for you have a way of lasting.',
+      n:['Your keychain broke once. Your nani fixed it.','The things she fixes for you have a way of lasting.'],
+      bg:g=>lkRoom(g,{wall:['#f1dfc6','#d3b08a'],top:['#8f6240','#3f2616'],ty:400,win:{x:130,y:50,w:300,h:240},light:'#fff0d2',pool:[380,560,380],seed:64}),obj:lkNaniTable,oy:540,
+      live:(ctx,lt)=>lkNaniHands(ctx,lt,380)},
   ],
   score({bars,melody,hit,THEME_B}){
-    bars(0,17,['Cmaj7','G','Em7','Dsus'],{padVel:0.34,arp:true,arpVel:0.11,step:0.5});
+    bars(0,27,['Cmaj7','G','Em7','Dsus'],{padVel:0.34,arp:true,arpVel:0.11,step:0.5});
     for(let b=1;b<9;b++)melody(b,b-1,'box',12,0.3,THEME_B);
     for(let b=9;b<17;b++)melody(b,b-5,'pluck',12,0.24,THEME_B);
-    hit(6.3*BAR,'swell',{dur:1.2,vel:0.25});
+    for(let b=17;b<26;b++)melody(b,b-17,'flute',0,0.24,THEME_B);
+    hit(8.8*BAR,'swell',{dur:1.2,vel:0.25});
   },
 });
 
 likesScene({id:'likes3',name:'What she loves · how she wants to be loved',when:'2026-08-21T19:03',fout:['#000000',1.6],
-  note:'small, thoughtful gifts (the birthday page, foreign coins, keychains, paper flowers; a tasbih, Zamzam, the bracelet and necklace) and the best one, a dua from the Haram; then how she wants to be loved: respect above everything, actions not words, “hajj wala fazul”, serious things on a call, hype and poetry, the few things she won’t have (crowds, waffles, iPhones, fireworks at weddings), and to be loved exactly as she is.',
+  note:'small, thoughtful gifts (the birthday page, foreign coins, keychains, paper flowers; a tasbih, Zamzam, the bracelet and necklace) and the best one, a dua from the Haram; then how she wants to be loved: respect above everything, actions not words, “hajj wala fazul”, serious things on a call, hype and poetry, the few things she won’t have (waffles, iPhones, Xanders, fireworks at weddings), the eyeshadow palette that comes out when she is pissed off, the kitchen scale and her 1500, and what she loves above all.',
   tag:'“just respect, that\'s it”',
   cards:[
     {d:1.5,side:'L',eye:'gifts that worked',line:'Small, and thoughtful.',small:'The birthday page. Coins for her collection. Keychains. Paper flowers.',q:[{who:'her',text:'Ayeeee i love those',tag:'12 August · paper flowers'}],
@@ -1097,14 +1355,22 @@ likesScene({id:'likes3',name:'What she loves · how she wants to be loved',when:
     {d:2,side:'L',tx:600,tw:560,eye:'apki zidd',line:'You don’t like waffles. Apki zidd jo hai!',bs:44,small:'Apki zidd: iPhone bhi nahi lena hai! Xanders bhi nahi. Aur shadi ke fireworks pe kharcha karna, you hate.',
       n:['You don’t like waffles. Apki zidd jo hai!','Apki zidd: iPhone bhi nahi lena hai! Xanders bhi nahi. Aur shadi ke fireworks pe kharcha karna, you hate.'],
       bg:lkCorkboard,blur:0,scrim:0,ink:'dark',oy:330,live:(ctx,lt,dt)=>lkCrossLive(ctx,lt,dt)},
-    {d:2.5,side:'R',tw:560,bs:46,eye:'what she loves, above all',line:'Being noticed. Things taken care of. Respected, super.',
+    {d:2.5,side:'R',eye:'when she\'s pissed off',line:'The Huda Beauty palette comes out.',bs:52,small:'And the eyes get done properly.',
+      n:['I learned the signs.','When you are pissed off, the Huda Beauty palette comes out, and the eyes get done properly.'],
+      bg:g=>lkRoom(g,{wall:['#3e2232','#5e3446'],top:['#4a2c22','#1e120c'],ty:390,lamp:[1120,80,460],light:'#ffd8b4',pool:[900,520,380],seed:65}),obj:lkHuda,oy:450,
+      live:(ctx,lt,dt,c)=>lkTwinkle(ctx,lt,lkHudaPans(lkOX(c)).filter(p=>p.sh).map((p,k)=>[p.cx-4,p.cy-3,k*0.37]),'#fff0d8',1.5),amb:{room:0.18,hum:0.08}},
+    {d:2.5,side:'L',eye:'fifteen hundred',line:'You measure everything you eat.',bs:52,small:'Even the chips. I never once wanted you to.',
+      n:['Fifteen hundred. You measure everything you eat, even the chips.','I never once wanted you to.'],
+      bg:g=>lkRoom(g,{wall:['#f4e7d2','#dcc4a4'],top:['#efe4d4','#c4b49c'],ty:360,grainCol:'#9a8a78',win:{x:120,y:40,w:300,h:240},light:'#fff6e0',pool:[380,540,380],seed:66}),obj:lkScale,oy:520},
+    {d:3,side:'R',tw:560,bs:46,eye:'what she loves, above all',line:'Being noticed. Things taken care of. Respected, super.',
       n:['What she loves, above all: being noticed.','Things being taken care of.','And being respected. Super respected.'],
       bg:lkGolden,blur:4,scrim:0.4,oy:300,live:(ctx,lt,dt)=>{drawFabeha(ctx,900,392,1.48,{t:lt,outfit:'sage',hair:'down',pose:'bust',arms:'lap',smile:0.92,eyes:(dt>1.4&&dt<2.6)?'happy':undefined,look:-0.12,blush:0.4,wind:0.25,tilt:-0.04+Math.sin(lt*0.6)*0.02,len:230});motes(ctx,lt,40,502,'#fff1c4',1.5,0.5);},amb:{wind:0.18,room:0}},
   ],
   score({bars,melody,hit,THEME_B,THEME_B_CH}){
-    bars(0,14,THEME_B_CH,{strings:true,padVel:0.36});
+    bars(0,21,THEME_B_CH,{strings:true,padVel:0.36});
     for(let b=0;b<8;b++)melody(b,b,'box',12,0.3,THEME_B);
     for(let b=8;b<13;b++)melody(b,b-8,'flute',0,0.28,THEME_B);
-    hit(12.5*BAR,'chime',{midi:79,vel:0.35});hit(13*BAR,'chime',{midi:83,vel:0.3});
+    for(let b=13;b<18;b++)melody(b,b-13,'box',12,0.24,THEME_B);
+    hit(17.5*BAR,'chime',{midi:79,vel:0.35});hit(18*BAR,'chime',{midi:83,vel:0.3});
   },
 });
