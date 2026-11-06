@@ -9,7 +9,7 @@ const S3_IMG={};
 function s3_img(name){if(!S3_IMG[name]){const im=new Image();im.src='photos/'+name;S3_IMG[name]=im;}return S3_IMG[name];}
 function s3_ready(im){return !!(im&&im.complete&&im.naturalWidth);}
 const S3_NOTE_TOP=0.115;                      /* the screenshots' status bar + the Notes toolbar, cropped off the top */
-function s3_noteCrop(im){const ok=s3_ready(im),nw=ok?im.naturalWidth:592,nh=ok?im.naturalHeight:1280,top=Math.round(nh*S3_NOTE_TOP);return[0,top,nw,nh-top];}
+function s3_noteCrop(im){const ok=s3_ready(im),nw=ok?im.naturalWidth:592,nh=ok?im.naturalHeight:1280,top=Math.round(nh*S3_NOTE_TOP),bot=Math.round(nh*0.075);return[0,top,nw,nh-top-bot];}
 
 /* a photograph fit to a height, centred at (cx,cy), a soft shadow, a push-in by z; crop = [sx,sy,sw,sh] in image pixels */
 function s3_photo(ctx,im,a,z,o={}){
